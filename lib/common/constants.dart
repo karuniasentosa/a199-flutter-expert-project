@@ -10,6 +10,8 @@ const Color kPrussianBlue = Color(0xFF003566);
 const Color kMikadoYellow = Color(0xFFffc300);
 const Color kDavysGrey = Color(0xFF4B5358);
 const Color kGrey = Color(0xFF303030);
+final Color kGrey30 = kGrey.withAlpha(255 - (255 * 0.3).ceil()); // 30% transparency
+final Color kGrey70 = kGrey.withAlpha(255 - (255 * 0.7).ceil()); // 70% transparency
 
 // text style
 final TextStyle kHeading5 =
@@ -44,3 +46,12 @@ const kColorScheme = ColorScheme(
   onError: Colors.white,
   brightness: Brightness.dark,
 );
+
+const kDividerTheme = DividerThemeData(
+  color: kMikadoYellow,
+);
+
+enum SearchContext {
+  tvSeries,
+  movie,
+}

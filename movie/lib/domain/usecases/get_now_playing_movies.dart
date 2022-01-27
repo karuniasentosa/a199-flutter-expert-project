@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/repositories/movie_repository.dart';
-import 'package:ditonton/common/failure.dart';
+import '../entities/movie.dart';
+import '../repositories/movie_repository.dart';
+import 'package:core/core.dart' show Failure;
 
 class GetNowPlayingMovies {
   final MovieRepository repository;

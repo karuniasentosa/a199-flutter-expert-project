@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/domain/repositories/movie_repository.dart';
+import 'package:core/core.dart' show Failure;
+import '../entities/movie.dart';
+import '../repositories/movie_repository.dart';
 
 class GetPopularMovies {
   final MovieRepository repository;

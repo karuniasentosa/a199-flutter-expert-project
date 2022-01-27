@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/domain/entities/movie_detail.dart';
-import 'package:ditonton/domain/repositories/movie_repository.dart';
-import 'package:ditonton/common/failure.dart';
+import '../entities/movie_detail.dart';
+import '../repositories/movie_repository.dart';
+import 'package:core/core.dart' show Failure; // show the failure so the code becomes mess
 
 class GetMovieDetail {
   final MovieRepository repository;

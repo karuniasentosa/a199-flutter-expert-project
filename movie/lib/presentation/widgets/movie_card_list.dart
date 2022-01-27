@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
+import '../../domain/entities/movie.dart';
+import '../pages/movie_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
@@ -38,7 +38,7 @@ class MovieCard extends StatelessWidget {
                       movie.title ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: kHeading6,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
                     SizedBox(height: 16),
                     Text(

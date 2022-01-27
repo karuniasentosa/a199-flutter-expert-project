@@ -10,11 +10,20 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  core:
+    path: ../core
+  http: ^0.13.4
+  equatable: ^2.0.3
+  dartz: ^0.10.1
+  cached_network_image: ^3.2.0
+  flutter_bloc: ^8.0.1
+  flutter_rating_bar: ^4.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  bloc_test: ^9.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

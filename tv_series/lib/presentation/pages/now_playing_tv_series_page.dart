@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 class NowPlayingTvSeriesPage extends StatefulWidget {
   static const routeName = '/now-playing-tv';
 
+  const NowPlayingTvSeriesPage({Key? key}) : super(key: key);
+
   @override
   State<NowPlayingTvSeriesPage> createState() => _PopularTvSeriesPage();
 }
@@ -25,14 +27,14 @@ class _PopularTvSeriesPage extends State<NowPlayingTvSeriesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Now Playing TV Series'),
+        title: const Text('Now Playing TV Series'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Consumer<NowPlayingTvSeriesNotifier>(
           builder: (context, data, child) {
             if (data.state == RequestState.Loading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             } else if (data.state == RequestState.Loaded) {
@@ -45,7 +47,7 @@ class _PopularTvSeriesPage extends State<NowPlayingTvSeriesPage> {
               );
             } else {
               return Center(
-                key: Key('error_message'),
+                key: const Key('error_message'),
                 child: Text(data.errorMessage),
               );
             }

@@ -1,11 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
 import '../../domain/entities/movie.dart';
 import 'movie_detail_page.dart';
 import 'popular_movies_page.dart';
 import 'top_rated_movies_page.dart';
-import 'package:ditonton/presentation/provider/movie/movie_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +32,7 @@ class _MovieListPageState extends State<MovieListPage> {
             children: [
               Text(
                 'Now Playing',
-                style: kHeading6,
+                style: Theme.of(context).textTheme.headline6,
               ),
               Consumer<MovieListNotifier>(builder: (context, data, child) {
                 final state = data.nowPlayingState;
@@ -94,7 +91,7 @@ class _MovieListPageState extends State<MovieListPage> {
       children: [
         Text(
           title,
-          style: kHeading6,
+          style: Theme.of(context).textTheme.headline6,
         ),
         InkWell(
           onTap: onTap,
@@ -136,7 +133,7 @@ class MovieList extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),

@@ -1,28 +1,13 @@
-import 'package:ditonton/data/datasources/db/database_helper.dart';
-import 'package:ditonton/data/datasources/movie_local_data_source.dart';
-import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
-import 'package:ditonton/data/datasources/tv_series_local_data_source.dart';
-import 'package:ditonton/data/datasources/tv_series_remote_data_source.dart';
-import 'package:ditonton/data/repositories/movie_repository_impl.dart';
-import 'package:ditonton/domain/repositories/movie_repository.dart';
-import 'package:ditonton/domain/repositories/tv_series_repository.dart';
-import 'package:ditonton/domain/usecases/movie/get_movie_detail.dart';
-import 'package:ditonton/domain/usecases/movie/get_movie_recommendations.dart';
-import 'package:ditonton/domain/usecases/movie/get_now_playing_movies.dart';
-import 'package:ditonton/domain/usecases/movie/get_popular_movies.dart';
-import 'package:ditonton/domain/usecases/movie/get_top_rated_movies.dart';
-import 'package:ditonton/domain/usecases/movie/get_watchlist_movies.dart';
-import 'package:ditonton/domain/usecases/movie/get_watchlist_status.dart';
-import 'package:ditonton/domain/usecases/movie/remove_watchlist.dart';
-import 'package:ditonton/domain/usecases/movie/save_watchlist.dart';
-import 'package:ditonton/domain/usecases/movie/search_movies.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_popular_tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_top_rated_tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_tv_series_detail.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_tv_series_recommendation.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_watchlist_tv_series_status.dart';
-import 'package:ditonton/domain/usecases/tv_series/insert_watchlist_tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/remove_watchlist_tv_series.dart';
+import 'package:core/core.dart' show DatabaseHelper;
+
+import 'package:movie/usecases.dart';
+import 'package:movie/datasources.dart';
+import 'package:movie/repositories.dart';
+
+import 'package:tv_series/usecases.dart';
+import 'package:tv_series/datasources.dart';
+import 'package:tv_series/repositories.dart';
+
 import 'package:ditonton/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/movie_list_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/movie_search_notifier.dart';
@@ -37,10 +22,6 @@ import 'package:ditonton/presentation/provider/tv_series/tv_series_watchlist_not
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
-import 'data/repositories/tv_series_repository_impl.dart';
-import 'domain/usecases/tv_series/get_now_playing_tv_series.dart';
-import 'domain/usecases/tv_series/get_watchlist_tv_series.dart';
-import 'domain/usecases/tv_series/search_tv_series.dart';
 import 'presentation/provider/tv_series/popular_tv_series_notifier.dart';
 
 final locator = GetIt.instance;

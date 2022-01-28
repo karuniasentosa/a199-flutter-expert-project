@@ -1,4 +1,4 @@
-import 'package:core/core.dart';
+import 'package:core/core.dart' show DatabaseException;
 import 'package:movie/data/datasources/db/movie_database_helper.dart';
 import '../models/movie_table.dart';
 
@@ -10,7 +10,7 @@ abstract class MovieLocalDataSource {
 }
 
 class MovieLocalDataSourceImpl implements MovieLocalDataSource {
-  final DatabaseHelper databaseHelper;
+  final MovieDatabaseHelper databaseHelper;
 
   MovieLocalDataSourceImpl({required this.databaseHelper});
 

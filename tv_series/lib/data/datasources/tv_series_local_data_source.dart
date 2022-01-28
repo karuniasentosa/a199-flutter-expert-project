@@ -1,8 +1,8 @@
-import '../../../../core/lib/common/exception.dart' as common;
-import 'package:ditonton/data/models/tv_series_model.dart';
+import 'package:core/core.dart'  as common show DatabaseException;
+import '../models/tv_series_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../../../core/lib/data/datasources/db/database_helper.dart';
+import 'db/tv_series_database_helper.dart';
 
 abstract class TvSeriesLocalDataSource {
   Future<bool> insertWatchlist(TvSeriesModel table);
@@ -12,7 +12,7 @@ abstract class TvSeriesLocalDataSource {
 }
 
 class TvSeriesLocalDataSourceImpl extends TvSeriesLocalDataSource {
-  final DatabaseHelper databaseHelper;
+  final TvSeriesDatabaseHelper databaseHelper;
 
   TvSeriesLocalDataSourceImpl({required this.databaseHelper});
 

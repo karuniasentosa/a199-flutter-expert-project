@@ -1,5 +1,5 @@
-import 'package:dartz/dartz.dart';
-import '../../../../core/lib/common/failure.dart';
+import 'package:dartz/dartz.dart' show Either;
+import 'package:core/failure.dart' show Failure, DatabaseFailure;
 import '../entities/tv_series.dart';
 import '../entities/tv_series_detail.dart';
 

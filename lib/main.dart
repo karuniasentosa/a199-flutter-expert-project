@@ -1,13 +1,11 @@
+import 'package:core/common/app_colors.dart';
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_page.dart';
-import 'package:ditonton/presentation/pages/tv_series/popular_tv_series_page.dart';
-import 'package:ditonton/presentation/pages/tv_series/tv_series_detail_page.dart';
-import 'package:ditonton/presentation/pages/movie/movie_detail_page.dart';
-import 'package:ditonton/presentation/pages/movie/popular_movies_page.dart';
+import 'package:tv_series/tv_series.dart' show PopularTvSeriesPage, TvSeriesDetailPage;
+import 'package:movie/movie.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
 import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/movie/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:ditonton/presentation/provider/movie/movie_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/movie/movie_list_notifier.dart';
@@ -73,9 +71,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData.dark().copyWith(
           colorScheme: kColorScheme,
-          primaryColor: kRichBlack,
-          accentColor: kMikadoYellow,
-          scaffoldBackgroundColor: kRichBlack,
+          primaryColor: AppColors.kRichBlack,
+          accentColor: AppColors.kMikadoYellow,
+          scaffoldBackgroundColor: AppColors.kRichBlack,
           textTheme: kTextTheme,
           dividerTheme: kDividerTheme,
         ),

@@ -1,18 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
+import 'package:core/appcolor.dart' show AppColors;
 import '../../domain/entities/season.dart';
 import 'package:flutter/material.dart';
 
 class SeasonCard extends StatelessWidget {
   final Season season;
 
-  const SeasonCard(this.season);
+  const SeasonCard(this.season, {Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8),
-      shape: RoundedRectangleBorder(
+      margin: const EdgeInsets.all(8),
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(16)),
         side: BorderSide()
       ),
@@ -21,13 +21,13 @@ class SeasonCard extends StatelessWidget {
         alignment: Alignment.bottomLeft,
         children: [
           season.posterPath != null ? CachedNetworkImage(
-              imageUrl: '$BASE_IMAGE_URL${season.posterPath}',
-              placeholder: (context, url) => Center(
+              imageUrl: 'https://image.tmdb.org/t/p/w500${season.posterPath}',
+              placeholder: (context, url) => const Center(
                 child: CircularProgressIndicator(),
               ),
 
-              errorWidget: (context, url, error) => Icon(Icons.error),
-          ) : Container(
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+          ) : const SizedBox(
               width: 120,
               height: 200,
               child: Center(child: Text('No image')),
@@ -36,8 +36,8 @@ class SeasonCard extends StatelessWidget {
             top: 0,
             right: 0,
             child: Container(
-              color: kGrey70,
-              padding: EdgeInsets.all(8.0),
+              color: AppColors.kGrey70,
+              padding: const EdgeInsets.all(8.0),
               child: Builder(
                 builder: (context) {
                   String repr;
@@ -49,7 +49,7 @@ class SeasonCard extends StatelessWidget {
                   return Text(
                     repr,
                     textAlign: TextAlign.end,
-                    style: kHeading6,
+                    style: Theme.of(context).textTheme.headline6,
                   );
                 }
               ),
@@ -58,8 +58,8 @@ class SeasonCard extends StatelessWidget {
           Positioned(
             bottom: 0,
             child: Container(
-              color: kGrey30,
-              padding: EdgeInsets.all(8.0),
+              color: AppColors.kGrey30,
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                   season.name,
                   overflow: TextOverflow.ellipsis,

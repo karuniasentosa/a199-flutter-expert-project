@@ -1,17 +1,20 @@
-import '../../../../core/lib/common/exception.dart';
-import '../../../lib/data/datasources/movie_local_data_source.dart';
+import 'package:movie/data/datasources/db/movie_database_helper.dart';
+import 'package:core/exception.dart';
+import 'package:mockito/annotations.dart';
+import 'package:movie/datasources.dart' show MovieLocalDataSourceImpl;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../test/dummy_data/dummy_objects.dart';
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../dummy_data/dummy_objects.dart';
+import 'movie_local_data_source_test.mocks.dart';
 
+@GenerateMocks([MovieDatabaseHelper])
 void main() {
   late MovieLocalDataSourceImpl dataSource;
-  late MockDatabaseHelper mockDatabaseHelper;
+  late MockMovieDatabaseHelper mockDatabaseHelper;
 
   setUp(() {
-    mockDatabaseHelper = MockDatabaseHelper();
+    mockDatabaseHelper = MockMovieDatabaseHelper();
     dataSource = MovieLocalDataSourceImpl(databaseHelper: mockDatabaseHelper);
   });
 

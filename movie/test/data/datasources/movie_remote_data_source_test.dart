@@ -1,16 +1,23 @@
 import 'dart:convert';
 
-import '../../../lib/data/datasources/movie_remote_data_source.dart';
-import '../../../lib/data/models/movie_detail_model.dart';
-import '../../../lib/data/models/movie_response.dart';
-import '../../../../core/lib/common/exception.dart';
+import 'package:mockito/annotations.dart';
+import 'package:movie/datasources.dart' show MovieRemoteDataSourceImpl;
+import 'package:movie/data/models/movie_detail_model.dart';
+import 'package:movie/data/models/movie_response.dart';
+import 'package:core/exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../../../../test/json_reader.dart';
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../json_reader.dart';
+import 'movie_remote_data_source_test.mocks.dart';
 
+@GenerateMocks(
+    [],
+    customMocks: [
+      MockSpec<http.Client>(as: #MockHttpClient)
+    ]
+)
 void main() {
   const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   const BASE_URL = 'https://api.themoviedb.org/3';

@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
 import '../../domain/entities/tv_series.dart';
-import 'package:ditonton/presentation/pages/tv_series/tv_series_detail_page.dart';
+import '../pages/tv_series_detail_page.dart';
 import 'package:flutter/material.dart';
 
 class TvSeriesCard extends StatelessWidget {
   final TvSeries tvSeries;
 
-  TvSeriesCard(this.tvSeries);
+  const TvSeriesCard(this.tvSeries, {Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +37,9 @@ class TvSeriesCard extends StatelessWidget {
                       tvSeries.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: kHeading6,
+                      style: Theme.of(context).textTheme.headline6,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       tvSeries.overview,
                       maxLines: 2,
@@ -57,14 +56,14 @@ class TvSeriesCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${tvSeries.posterPath}',
+                  imageUrl: 'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
                   width: 80,
-                  placeholder: (context, url) => Center(
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(8)),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
               ),
             ),
           ],

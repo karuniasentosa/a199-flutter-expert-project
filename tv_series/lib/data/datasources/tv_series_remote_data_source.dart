@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import '../../../../core/lib/common/exception.dart';
-import 'package:ditonton/data/models/tv_series_detail_model.dart';
-import 'package:ditonton/data/models/tv_series_model.dart';
-import 'package:ditonton/data/models/tv_series_response.dart';
+import 'package:core/core.dart' show DatabaseException, ServerException;
+import '../models/tv_series_detail_model.dart';
+import '../models/tv_series_model.dart';
+import '../models/tv_series_response.dart';
 import 'package:http/http.dart' as http;
 
 abstract class TvSeriesRemoteDataSource {

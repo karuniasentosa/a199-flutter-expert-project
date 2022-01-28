@@ -1,10 +1,10 @@
-import 'package:ditonton/common/constants.dart';
+import 'package:core/core.dart' show AppColors;
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/provider/movie/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_watchlist_notifier.dart';
-import 'package:ditonton/presentation/widgets/movie_card_list.dart';
-import 'package:ditonton/presentation/widgets/tv_series_card_list.dart';
+import 'package:movie/movie.dart' show MovieCard;
+import 'package:tv_series/tv_series.dart' show TvSeriesCard;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +53,7 @@ class _WatchlistPageState extends State<WatchlistPage>
       appBar: AppBar(
         title: Text('Watchlist'),
         bottom: TabBar(
-          indicatorColor: kMikadoYellow,
+          indicatorColor: AppColors.kMikadoYellow,
           controller: _tabController,
           tabs: const [
             Tab(text: 'Movies'),

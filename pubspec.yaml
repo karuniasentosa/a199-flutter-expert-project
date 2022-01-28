@@ -24,12 +24,21 @@ dependencies:
   flutter:
     sdk: flutter
 
+  movie:
+    path: movie/
+
+  tv_series:
+    path: tv_series/
+
+  core:
+    path: core/
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   http: ^0.13.3
-  provider: ^5.0.0
+  provider: ^6.0.2
   dartz: ^0.10.0-nullsafety.2
   equatable: ^2.0.2
   google_fonts: ^2.1.0

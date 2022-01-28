@@ -12,6 +12,8 @@ import 'package:provider/provider.dart';
 class TvSeriesListPage extends StatefulWidget {
   static const routeName = '/home-tv';
 
+  const TvSeriesListPage({Key? key}) : super(key: key);
+
   @override
   State<TvSeriesListPage> createState() => _TvSeriesListPageState();
 }
@@ -44,13 +46,13 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
             Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.nowPlayingTvSeriesState;
               if (state == RequestState.Loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.nowPlayingTvSeriesList);
               } else if (state == RequestState.Empty) {
-                return Text('No now playing tv series available :(');
+                return const Text('No now playing tv series available :(');
               } else {
                 return Text(
                     'An Error occurred: ${data.topRatedTvSeriesErrorMessage}');
@@ -64,13 +66,13 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
             Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.popularTvSeriesState;
               if (state == RequestState.Loading) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.popularTvSeriesList);
               } else if (state == RequestState.Empty) {
-                return Text('No popular tv series available :(');
+                return const Text('No popular tv series available :(');
               } else {
                 return Text(
                     'Erro r occured: ${data.popularTvSeriesErrorMessage}');
@@ -80,11 +82,11 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
             Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
               final state = data.topRatedTvSeriesState;
               if (state == RequestState.Loading) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (state == RequestState.Loaded) {
                 return TvSeriesList(data.topRatedTvSeriesList);
               } else if (state == RequestState.Empty) {
-                return Text('No top rated tv series avaibale :(');
+                return const Text('No top rated tv series avaibale :(');
               } else {
                 return Text(
                     'Error occured: ${data.topRatedTvSeriesErrorMessage}');
@@ -100,7 +102,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
       children: [
         Text(
           title,
-          style: kHeading6,
+          style: Theme.of(context).textTheme.headline6,
         ),
         onTap != null
             ? InkWell(
@@ -108,11 +110,11 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+                    children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
                   ),
                 ),
               )
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }
@@ -121,11 +123,11 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
 class TvSeriesList extends StatelessWidget {
   final List<TvSeries> tvSeries;
 
-  TvSeriesList(this.tvSeries);
+  const TvSeriesList(this.tvSeries, {Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -142,13 +144,13 @@ class TvSeriesList extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${series.posterPath}',
-                  placeholder: (context, url) => Center(
+                  imageUrl: 'https://image.tmdb.org/t/p/w500${series.posterPath}',
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

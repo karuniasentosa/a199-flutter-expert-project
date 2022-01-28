@@ -1,5 +1,5 @@
-import 'package:dartz/dartz.dart';
-import '../../../../core/lib/common/failure.dart';
+import 'package:dartz/dartz.dart' show Either;
+import 'package:core/core.dart' show DatabaseFailure;
 import '../repositories/tv_series_repository.dart';
 
 class RemoveWatchlistTvSeries {

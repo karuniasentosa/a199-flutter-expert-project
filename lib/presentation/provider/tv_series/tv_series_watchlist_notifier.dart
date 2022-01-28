@@ -1,7 +1,7 @@
-import 'package:ditonton/common/failure.dart';
+import '../../../../core/lib/common/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_watchlist_tv_series.dart';
+import '../../../../tv_series/lib/domain/entities/tv_series.dart';
+import '../../../../tv_series/lib/domain/usecases/get_watchlist_tv_series.dart';
 import 'package:flutter/foundation.dart';
 
 class TvSeriesWatchlistNotifier extends ChangeNotifier {

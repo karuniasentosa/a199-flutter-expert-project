@@ -1,10 +1,11 @@
 import 'package:dartz/dartz.dart';
-import '../../../lib/domain/entities/movie.dart';
-import '../../../lib/domain/usecases/get_popular_movies.dart';
+import 'package:movie/domain/entities/movie.dart';
+import 'package:movie/usecases.dart' show GetPopularMovies;
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../test/helpers/test_helper.mocks.dart';
+import 'mockhelper.mocks.dart';
+
 
 void main() {
   late GetPopularMovies usecase;

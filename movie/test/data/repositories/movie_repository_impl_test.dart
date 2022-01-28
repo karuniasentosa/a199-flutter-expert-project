@@ -1,19 +1,22 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:ditonton/data/models/genre_model.dart';
-import '../../../lib/data/models/movie_detail_model.dart';
-import 'package:ditonton/data/models/movie_model.dart';
-import '../../../lib/data/repositories/movie_repository_impl.dart';
-import '../../../../core/lib/common/exception.dart';
-import '../../../../core/lib/common/failure.dart';
-import '../../../lib/domain/entities/movie.dart';
+import 'package:mockito/annotations.dart';
+import 'package:movie/datasources.dart';
+import 'package:movie/data/models/genre_model.dart';
+import 'package:movie/data/models/movie_model.dart';
+import 'package:movie/data/models/movie_detail_model.dart';
+import 'package:movie/data/repositories/movie_repository_impl.dart';
+import 'package:core/exception.dart';
+import 'package:core/failure.dart';
+import 'package:movie/domain/entities/movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../../test/dummy_data/dummy_objects.dart';
-import '../../../../test/helpers/test_helper.mocks.dart';
+import '../../dummy_data/dummy_objects.dart';
+import 'movie_repository_impl_test.mocks.dart';
 
+@GenerateMocks([MovieRemoteDataSource, MovieLocalDataSource])
 void main() {
   late MovieRepositoryImpl repository;
   late MockMovieRemoteDataSource mockRemoteDataSource;

@@ -1,12 +1,12 @@
-import 'package:dartz/dartz.dart';
-import '../../../../core/lib/common/exception.dart';
-import '../../../../core/lib/common/failure.dart';
+import 'package:dartz/dartz.dart' show Either, Left, Right;
+import 'package:core/exception.dart';
+import 'package:core/failure.dart';
 import '../datasources/tv_series_local_data_source.dart';
 import '../datasources/tv_series_remote_data_source.dart';
 import '../models/tv_series_model.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/entities/tv_series_detail.dart';
-import 'package:ditonton/domain/repositories/tv_series_repository.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/domain/entities/tv_series_detail.dart';
+import 'package:tv_series/domain/repositories/tv_series_repository.dart';
 
 class TvSeriesRepositoryImpl extends TvSeriesRepository {
 

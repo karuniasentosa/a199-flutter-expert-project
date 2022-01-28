@@ -1,9 +1,9 @@
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/presentation/pages/movie/movie_lists_page.dart';
+import 'package:movie/movie.dart' show MovieListPage;
 import 'package:flutter/material.dart';
 
 import 'about_page.dart';
-import 'tv_series/tv_series_list_page.dart';
+import 'package:tv_series/tv_series.dart' show TvSeriesListPage;
 import 'search_page.dart';
 import 'watchlist_page.dart';
 

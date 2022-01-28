@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
 import 'package:movie/domain/entities/genre.dart';
 import 'package:movie/domain/entities/movie.dart';
 import 'package:movie/domain/entities/movie_detail.dart';
-import 'package:ditonton/presentation/provider/movie/movie_detail_notifier.dart';
-import 'package:ditonton/common/state_enum.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
+
+import 'package:core/core.dart' show AppColors;
 
 class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
@@ -84,7 +83,7 @@ class DetailContent extends StatelessWidget {
             builder: (context, scrollController) {
               return Container(
                 decoration: BoxDecoration(
-                  color: kRichBlack,
+                  color: AppColors.kRichBlack,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
                 padding: const EdgeInsets.only(
@@ -103,7 +102,7 @@ class DetailContent extends StatelessWidget {
                           children: [
                             Text(
                               movie.title,
-                              style: kHeading5,
+                              style: Theme.of(context).textTheme.headline5,
                             ),
                             ElevatedButton(
                               onPressed: () async {
@@ -165,7 +164,7 @@ class DetailContent extends StatelessWidget {
                                   itemCount: 5,
                                   itemBuilder: (context, index) => Icon(
                                     Icons.star,
-                                    color: kMikadoYellow,
+                                    color: AppColors.kMikadoYellow,
                                   ),
                                   itemSize: 24,
                                 ),
@@ -175,7 +174,7 @@ class DetailContent extends StatelessWidget {
                             SizedBox(height: 16),
                             Text(
                               'Overview',
-                              style: kHeading6,
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             Text(
                               movie.overview,
@@ -183,7 +182,7 @@ class DetailContent extends StatelessWidget {
                             SizedBox(height: 16),
                             Text(
                               'Recommendations',
-                              style: kHeading6,
+                              style: Theme.of(context).textTheme.headline6,
                             ),
                             Consumer<MovieDetailNotifier>(
                               builder: (context, data, child) {
@@ -265,7 +264,7 @@ class DetailContent extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: CircleAvatar(
-            backgroundColor: kRichBlack,
+            backgroundColor: AppColors.kRichBlack,
             foregroundColor: Colors.white,
             child: IconButton(
               icon: Icon(Icons.arrow_back),

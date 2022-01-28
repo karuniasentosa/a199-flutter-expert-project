@@ -1,7 +1,7 @@
-import 'package:ditonton/common/failure.dart';
+import 'package:core/failure.dart';
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/tv_series.dart';
-import 'package:ditonton/domain/usecases/tv_series/get_now_playing_tv_series.dart';
+import 'package:tv_series/domain/entities/tv_series.dart';
+import 'package:tv_series/usecases.dart' show GetNowPlayingTvSeries;
 import 'package:flutter/cupertino.dart';
 
 class NowPlayingTvSeriesNotifier extends ChangeNotifier {

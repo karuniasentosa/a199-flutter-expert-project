@@ -1,7 +1,9 @@
 import 'dart:io';
 
 String readJson(String name) {
-  var dir = Directory.current.path;
+  final current = Directory.current;
+  var dir = Uri.directory('${current.path}/movie').path;
+
   if (dir.endsWith('/test')) {
     dir = dir.replaceAll('/test', '');
   }

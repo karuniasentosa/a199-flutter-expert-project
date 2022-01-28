@@ -1,6 +1,6 @@
 import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/domain/entities/movie.dart';
-import 'package:ditonton/presentation/pages/movie/popular_movies_page.dart';
+import '../../../lib/domain/entities/movie.dart';
+import '../../../lib/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/provider/movie/popular_movies_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,7 +8,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
-import 'popular_movies_page_test.mocks.dart';
+import '../../../../test/presentation/pages/popular_movies_page_test.mocks.dart';
 
 @GenerateMocks([PopularMoviesNotifier])
 void main() {

@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:ditonton/data/datasources/movie_remote_data_source.dart';
-import 'package:ditonton/data/models/movie_detail_model.dart';
-import 'package:ditonton/data/models/movie_response.dart';
-import 'package:ditonton/common/exception.dart';
+import '../../../lib/data/datasources/movie_remote_data_source.dart';
+import '../../../lib/data/models/movie_detail_model.dart';
+import '../../../lib/data/models/movie_response.dart';
+import '../../../../core/lib/common/exception.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mockito/mockito.dart';
 
-import '../../json_reader.dart';
-import '../../helpers/test_helper.mocks.dart';
+import '../../../../test/json_reader.dart';
+import '../../../../test/helpers/test_helper.mocks.dart';
 
 void main() {
   const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';

@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:ditonton/data/models/genre_model.dart';
-import 'package:ditonton/data/models/movie_detail_model.dart';
+import '../../../lib/data/models/movie_detail_model.dart';
 import 'package:ditonton/data/models/movie_model.dart';
-import 'package:ditonton/data/repositories/movie_repository_impl.dart';
-import 'package:ditonton/common/exception.dart';
-import 'package:ditonton/common/failure.dart';
-import 'package:ditonton/domain/entities/movie.dart';
+import '../../../lib/data/repositories/movie_repository_impl.dart';
+import '../../../../core/lib/common/exception.dart';
+import '../../../../core/lib/common/failure.dart';
+import '../../../lib/domain/entities/movie.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../dummy_data/dummy_objects.dart';
-import '../../helpers/test_helper.mocks.dart';
+import '../../../../test/dummy_data/dummy_objects.dart';
+import '../../../../test/helpers/test_helper.mocks.dart';
 
 void main() {
   late MovieRepositoryImpl repository;

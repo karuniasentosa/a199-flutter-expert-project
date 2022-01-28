@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
-import '../../../../movie/lib/domain/entities/movie.dart';
-import '../../../../movie/lib/domain/usecases/get_now_playing_movies.dart';
+import '../../../lib/domain/entities/movie.dart';
+import '../../../lib/domain/usecases/get_now_playing_movies.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import '../../../helpers/test_helper.mocks.dart';
+import '../../../../test/helpers/test_helper.mocks.dart';
 
 void main() {
   late GetNowPlayingMovies usecase;

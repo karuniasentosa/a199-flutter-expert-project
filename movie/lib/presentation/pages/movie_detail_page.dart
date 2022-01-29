@@ -40,9 +40,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
           } else if (state is MovieDetailResult) {
             final movie = state.movieDetail;
             return SafeArea(
-              child: DetailContent(
-                movie
-              ),
+              child: DetailContent(movie),
             );
           } else if (state is MovieDetailError){
             return Text(state.errorMessage);

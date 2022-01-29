@@ -46,7 +46,7 @@ class _MovieListPageState extends State<MovieListPage> {
                   );
                 } else if (state is NowPlayingMoviesResult) {
                   return MovieList(state.movieList);
-                } else if (state is NowPlayingMoviesError){
+                } else if (state is NowPlayingMoviesError) {
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();
@@ -65,7 +65,7 @@ class _MovieListPageState extends State<MovieListPage> {
                   );
                 } else if (state is PopularMoviesResult) {
                   return MovieList(state.movies);
-                } else if (state is PopularMoviesError){
+                } else if (state is PopularMoviesError) {
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();
@@ -84,7 +84,7 @@ class _MovieListPageState extends State<MovieListPage> {
                   );
                 } else if (state is TopRatedMoviesResult) {
                   return MovieList(state.movies);
-                } else if (state is TopRatedMoviesError){
+                } else if (state is TopRatedMoviesError) {
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();
@@ -120,7 +120,7 @@ class _MovieListPageState extends State<MovieListPage> {
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
 
-  const MovieList(this.movies, {Key? key}): super(key: key);
+  const MovieList(this.movies, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

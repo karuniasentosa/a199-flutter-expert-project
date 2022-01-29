@@ -1,12 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/movie.dart';
 import 'movie_detail_page.dart';
 import 'popular_movies_page.dart';
 import 'top_rated_movies_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+
+import '../bloc/movie_list_page_blocs.dart';
 
 class MovieListPage extends StatefulWidget {
+  const MovieListPage({Key? key}) : super(key: key);
+
   @override
   _MovieListPageState createState() => _MovieListPageState();
 }
@@ -15,11 +19,11 @@ class _MovieListPageState extends State<MovieListPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+    Future.microtask(() {
+      context.read<NowPlayingMoviesCubit>()();
+      context.read<PopularMoviesCubit>()();
+      context.read<TopRatedMoviesCubit>()();
+    });
   }
 
   @override
@@ -34,16 +38,18 @@ class _MovieListPageState extends State<MovieListPage> {
                 'Now Playing',
                 style: Theme.of(context).textTheme.headline6,
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.nowPlayingState;
-                if (state == RequestState.Loading) {
-                  return Center(
+              BlocBuilder<NowPlayingMoviesCubit, NowPlayingMoviesState>(
+                  builder: (context, state) {
+                if (state is NowPlayingMoviesLoading) {
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.nowPlayingMovies);
+                } else if (state is NowPlayingMoviesResult) {
+                  return MovieList(state.movieList);
+                } else if (state is NowPlayingMoviesError){
+                  return Text('Failed: ${state.errorMessage}');
                 } else {
-                  return Text('Failed');
+                  return Container();
                 }
               }),
               _buildSubHeading(
@@ -51,16 +57,18 @@ class _MovieListPageState extends State<MovieListPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.popularMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
+              BlocBuilder<PopularMoviesCubit, PopularMoviesState>(
+                  builder: (context, state) {
+                if (state is PopularMoviesLoading) {
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.popularMovies);
+                } else if (state is PopularMoviesResult) {
+                  return MovieList(state.movies);
+                } else if (state is PopularMoviesError){
+                  return Text('Failed: ${state.errorMessage}');
                 } else {
-                  return Text('Failed');
+                  return Container();
                 }
               }),
               _buildSubHeading(
@@ -68,16 +76,18 @@ class _MovieListPageState extends State<MovieListPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
               ),
-              Consumer<MovieListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedMoviesState;
-                if (state == RequestState.Loading) {
-                  return Center(
+              BlocBuilder<TopRatedMoviesCubit, TopRatedMoviesState>(
+                  builder: (context, state) {
+                if (state is TopRatedMoviesLoading) {
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return MovieList(data.topRatedMovies);
+                } else if (state is TopRatedMoviesResult) {
+                  return MovieList(state.movies);
+                } else if (state is TopRatedMoviesError){
+                  return Text('Failed: ${state.errorMessage}');
                 } else {
-                  return Text('Failed');
+                  return Container();
                 }
               }),
             ],
@@ -98,7 +108,7 @@ class _MovieListPageState extends State<MovieListPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),
         ),
@@ -110,11 +120,11 @@ class _MovieListPageState extends State<MovieListPage> {
 class MovieList extends StatelessWidget {
   final List<Movie> movies;
 
-  MovieList(this.movies);
+  const MovieList(this.movies, {Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -131,13 +141,14 @@ class MovieList extends StatelessWidget {
                 );
               },
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(16)),
+                borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
-                  placeholder: (context, url) => Center(
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                  placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
             ),

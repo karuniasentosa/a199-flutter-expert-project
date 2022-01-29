@@ -41,6 +41,9 @@ class MovieWatchlistBloc extends Bloc<MovieWatchlistEvent, MovieWatchlistState> 
             (message) {
               emitter(MovieInsertWatchlistSuccess(message));
             });
+
+    // send events again to get status
+    add(WatchlistStatusGet(evt.movieDetail.id));
   }
 
   Future _onWatchlistRemove(WatchlistRemove evt, Emitter emitter) async {
@@ -54,5 +57,8 @@ class MovieWatchlistBloc extends Bloc<MovieWatchlistEvent, MovieWatchlistState> 
             (message) {
               emitter(MovieRemoveWatchlistSuccess(message));
             });
+
+    // send events again to get status
+    add(WatchlistStatusGet(evt.movieDetail.id));
   }
 }

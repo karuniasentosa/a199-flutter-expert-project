@@ -3,15 +3,12 @@ import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/tv_series.dart' show PopularTvSeriesPage, TvSeriesDetailPage;
-import 'package:movie/movie.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
+import 'package:movie/pages.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
+import 'package:movie/blocs.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
-import 'package:ditonton/presentation/provider/movie/movie_list_notifier.dart';
-import 'package:ditonton/presentation/provider/movie/movie_search_notifier.dart';
-import 'package:ditonton/presentation/provider/movie/popular_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/movie/top_rated_movies_notifier.dart';
-import 'package:ditonton/presentation/provider/movie/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/popular_tv_series_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_list_notifier.dart';
@@ -32,24 +29,28 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
+        BlocProvider<NowPlayingMoviesCubit>(
+          create: (_) => di.locator<NowPlayingMoviesCubit>(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (_) => di.locator<MovieDetailNotifier>(),
-        // ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
+        BlocProvider<TopRatedMoviesCubit>(
+          create: (_) => di.locator<TopRatedMoviesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
+        BlocProvider<PopularMoviesCubit>(
+          create: (_) => di.locator<PopularMoviesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
+        BlocProvider<MovieDetailCubit>(
+          create: (_) => di.locator<MovieDetailCubit>()
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
+        BlocProvider<MovieWatchlistBloc>(
+          create: (_) => di.locator<MovieWatchlistBloc>()
         ),
+        BlocProvider<SearchMoviesCubit>(
+          create: (_) => di.locator<SearchMoviesCubit>()
+        ),
+        BlocProvider<WatchlistMoviesCubit>(
+          create: (_) => di.locator<WatchlistMoviesCubit>()
+        ),
+
         ChangeNotifierProvider(
           create: (_) => di.locator<TvSeriesListNotifier>(),
         ),

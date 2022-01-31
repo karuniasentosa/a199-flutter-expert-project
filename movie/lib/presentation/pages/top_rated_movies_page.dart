@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:movie/presentation/bloc/movie_list_page_blocs.dart';
+import '../bloc/top_rated_movies_page_bloc.dart';
 
 import '../widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';

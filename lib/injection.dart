@@ -35,12 +35,7 @@ void init() {
     removeWatchlist: locator()
   ));
   locator.registerFactory(() => SearchMoviesCubit(locator()));
-
-  // locator.registerFactory(
-  //   () => WatchlistMovieNotifier(
-  //     getWatchlistMovies: locator(),
-  //   ),
-  // );
+  locator.registerFactory(() => WatchlistMoviesCubit(locator()));
 
   locator.registerFactory(() => PopularTvSeriesNotifier(locator()));
   locator.registerFactory(() => NowPlayingTvSeriesNotifier(locator()));

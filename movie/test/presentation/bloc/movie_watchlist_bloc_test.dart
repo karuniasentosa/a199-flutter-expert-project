@@ -37,9 +37,9 @@ void main() {
             .thenAnswer((realInvocation) async => false);
       },
       build: () => movieWatchlistBloc,
-      act: (bloc) => bloc.add(WatchlistStatusGet(movieId)),
+      act: (bloc) => bloc.add(const WatchlistStatusGet(movieId)),
       expect: () => [
-        MovieWatchlistStatus(false)
+        const MovieWatchlistStatus(false)
       ]
     );
 
@@ -50,9 +50,9 @@ void main() {
               .thenAnswer((realInvocation) async => true);
         },
         build: () => movieWatchlistBloc,
-        act: (bloc) => bloc.add(WatchlistStatusGet(movieId)),
+        act: (bloc) => bloc.add(const WatchlistStatusGet(movieId)),
         expect: () => [
-          MovieWatchlistStatus(true)
+          const MovieWatchlistStatus(true)
         ]
     );
   });
@@ -85,7 +85,8 @@ void main() {
         build: () => movieWatchlistBloc,
         act: (bloc) => bloc.add(WatchlistInsert(testMovieDetail)),
         expect: () => [
-          isA<MovieInsertWatchlistError>()
+          isA<MovieInsertWatchlistError>(),
+          const MovieWatchlistStatus(false)
         ]
     );
   });
@@ -97,7 +98,7 @@ void main() {
         when(mockGetWatchListStatus.execute(testMovieDetail.id))
             .thenAnswer((_) async => false);
         when(mockRemoveWatchlist.execute(testMovieDetail))
-            .thenAnswer((_) async => Right('Successfully removed from watchlist'));
+            .thenAnswer((_) async => const Right('Successfully removed from watchlist'));
       },
       build: () => movieWatchlistBloc,
       act: (bloc) => bloc.add(WatchlistRemove(testMovieDetail)),
@@ -118,7 +119,8 @@ void main() {
         build: () => movieWatchlistBloc,
         act: (bloc) => bloc.add(WatchlistRemove(testMovieDetail)),
         expect: () => [
-          isA<MovieRemoveWatchlistError>()
+          isA<MovieRemoveWatchlistError>(),
+          const MovieWatchlistStatus(true)
         ]
     );
   });

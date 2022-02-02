@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../lib/domain/entities/season.dart';
-import '../../../lib/presentation/widgets/season_card.dart';
+import 'package:tv_series/domain/entities/season.dart';
+import 'package:tv_series/presentation/widgets/season_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

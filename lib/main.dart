@@ -4,16 +4,18 @@ import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tv_series/tv_series.dart' show PopularTvSeriesPage, TvSeriesDetailPage;
-import 'package:movie/pages.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
-import 'package:movie/blocs.dart';
-import 'package:tv_series/blocs.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
+
+import 'package:tv_series/pages.dart';
+import 'package:tv_series/blocs.dart';
+
+import 'package:movie/pages.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
+import 'package:movie/blocs.dart';
+import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/pages/watchlist_page.dart';
 
 void main() {
   di.init();
@@ -36,6 +38,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<MovieDetailCubit>(
           create: (_) => di.locator<MovieDetailCubit>()
+        ),
+        BlocProvider<MovieRecommendationsCubit>(
+          create: (_) => di.locator()
         ),
         BlocProvider<MovieWatchlistBloc>(
           create: (_) => di.locator<MovieWatchlistBloc>()
@@ -93,6 +98,8 @@ class MyApp extends StatelessWidget {
               return MaterialPageRoute(builder: (_) => PopularTvSeriesPage());
             case TopRatedMoviesPage.ROUTE_NAME:
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
+            case NowPlayingTvSeriesPage.routeName:
+              return MaterialPageRoute(builder: (_) => NowPlayingTvSeriesPage());
             case MovieDetailPage.ROUTE_NAME:
               final id = settings.arguments as int;
               return MaterialPageRoute(

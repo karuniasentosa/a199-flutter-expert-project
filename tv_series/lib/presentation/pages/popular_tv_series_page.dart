@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../bloc/popular_tv_series_page_bloc.dart';
 
 class PopularTvSeriesPage extends StatefulWidget {
-  static const routeName = '/now-playing-tv';
+  static const routeName = '/popular-tv';
 
   const PopularTvSeriesPage({Key? key}) : super(key: key);
 

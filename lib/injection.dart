@@ -8,16 +8,13 @@ import 'package:movie/blocs.dart';
 import 'package:tv_series/usecases.dart';
 import 'package:tv_series/datasources.dart';
 import 'package:tv_series/repositories.dart';
+import 'package:tv_series/blocs.dart';
 
-import 'package:ditonton/presentation/provider/tv_series/now_playing_tv_series_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_series/tv_series_watchlist_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
-import 'presentation/provider/tv_series/popular_tv_series_notifier.dart';
 
 final locator = GetIt.instance;
 
@@ -37,20 +34,15 @@ void init() {
   locator.registerFactory(() => SearchMoviesCubit(locator()));
   locator.registerFactory(() => WatchlistMoviesCubit(locator()));
 
-  locator.registerFactory(() => PopularTvSeriesNotifier(locator()));
-  locator.registerFactory(() => NowPlayingTvSeriesNotifier(locator()));
-  locator.registerFactory(() => TvSeriesDetailNotifier(
-      getTvSeriesDetail: locator(),
-      getTvSeriesRecommendation: locator(),
-      insertWatchlistTvSeries: locator(),
-      getWatchlistTvSeriesStatus: locator(),
-      removeWatchlistTvSeries: locator(),
+  locator.registerFactory(() => PopularTvSeriesCubit(locator()));
+  locator.registerFactory(() => NowPlayingTvSeriesCubit(locator()));
+  locator.registerFactory(() => TvSeriesDetailCubit(locator()));
+  locator.registerFactory(() => TvSeriesRecommendationCubit(locator()));
+  locator.registerFactory(() => TvSeriesWatchlistBloc(
+    getWatchlistTvSeriesStatus: locator(),
+    insertWatchlistTvSeries: locator(),
+    removeWatchlistTvSeries: locator()
   ));
-  locator.registerFactory(() => TvSeriesListNotifier(
-      getPopularTvSeries: locator(),
-      getTopRatedTvSeries: locator(),
-      getNowPlayingTvSeries: locator())
-  );
   locator.registerFactory(() => TvSeriesSearchNotifier(locator()));
   locator.registerFactory(() => TvSeriesWatchlistNotifier(
       getWatchlistTvSeries: locator())

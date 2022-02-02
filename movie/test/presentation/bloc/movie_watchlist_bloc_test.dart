@@ -61,19 +61,24 @@ void main() {
     blocTest<MovieWatchlistBloc, MovieWatchlistState>(
       'should return success message from usecase',
       setUp: () {
+        when(mockGetWatchListStatus.execute(testMovieDetail.id))
+            .thenAnswer((_) async => true);
         when(mockSaveWatchlist.execute(testMovieDetail))
             .thenAnswer((_) async => const Right('Successfully added to watchlist'));
       },
       build: () => movieWatchlistBloc,
       act: (bloc) => bloc.add(WatchlistInsert(testMovieDetail)),
       expect: () => [
-        isA<MovieInsertWatchlistSuccess>()
+        isA<MovieInsertWatchlistSuccess>(),
+        const MovieWatchlistStatus(true),
       ]
     );
 
     blocTest<MovieWatchlistBloc, MovieWatchlistState>(
         'should return failure message from usecase',
         setUp: () {
+          when(mockGetWatchListStatus.execute(testMovieDetail.id))
+              .thenAnswer((_) async => false);
           when(mockSaveWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => Left(DatabaseFailure('I forgot the password to open it :)')));
         },
@@ -89,6 +94,8 @@ void main() {
     blocTest<MovieWatchlistBloc, MovieWatchlistState>(
       'should return success message from usecase',
       setUp: () {
+        when(mockGetWatchListStatus.execute(testMovieDetail.id))
+            .thenAnswer((_) async => false);
         when(mockRemoveWatchlist.execute(testMovieDetail))
             .thenAnswer((_) async => Right('Successfully removed from watchlist'));
       },
@@ -96,12 +103,15 @@ void main() {
       act: (bloc) => bloc.add(WatchlistRemove(testMovieDetail)),
       expect: () => [
         isA<MovieRemoveWatchlistSuccess>(),
+        const MovieWatchlistStatus(false)
       ]
     );
 
     blocTest<MovieWatchlistBloc, MovieWatchlistState>(
-        'should return success message from usecase',
+        'should return fail message from usecase',
         setUp: () {
+          when(mockGetWatchListStatus.execute(testMovieDetail.id))
+              .thenAnswer((_) async => true);
           when(mockRemoveWatchlist.execute(testMovieDetail))
               .thenAnswer((_) async => Left(DatabaseFailure('Successfully removed from watchlist')));
         },

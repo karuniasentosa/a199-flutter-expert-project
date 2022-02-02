@@ -1,10 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_series/blocs.dart';
 
 import '../widgets/tv_series_card_list.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../bloc/popular_tv_series_page_bloc.dart';
 
 class NowPlayingTvSeriesPage extends StatefulWidget {
   static const routeName = '/now-playing-tv';
@@ -12,15 +10,15 @@ class NowPlayingTvSeriesPage extends StatefulWidget {
   const NowPlayingTvSeriesPage({Key? key}) : super(key: key);
 
   @override
-  State<NowPlayingTvSeriesPage> createState() => _PopularTvSeriesPage();
+  State<NowPlayingTvSeriesPage> createState() => _NowPlayingTvSeriesState();
 }
 
-class _PopularTvSeriesPage extends State<NowPlayingTvSeriesPage> {
+class _NowPlayingTvSeriesState extends State<NowPlayingTvSeriesPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(() =>
-        context.read<PopularTvSeriesCubit>()()
+        context.read<NowPlayingTvSeriesCubit>()()
     );
   }
 
@@ -32,13 +30,13 @@ class _PopularTvSeriesPage extends State<NowPlayingTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: BlocBuilder<PopularTvSeriesCubit, PopularTvSeriesState>(
+        child: BlocBuilder<NowPlayingTvSeriesCubit, NowPlayingTvSeriesState>(
           builder: (context, state) {
-            if (state is PopularTvSeriesLoading) {
+            if (state is NowPlayingTvSeriesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (state is PopularTvSeriesResult) {
+            } else if (state is NowPlayingTvSeriesResult) {
               return ListView.builder(
                 itemBuilder: (context, index) {
                   final tvSeries = state.tvSeries[index];
@@ -46,7 +44,7 @@ class _PopularTvSeriesPage extends State<NowPlayingTvSeriesPage> {
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is PopularTvSeriesError){
+            } else if (state is NowPlayingTvSeriesError){
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

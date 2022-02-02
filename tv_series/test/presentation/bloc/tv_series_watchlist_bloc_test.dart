@@ -36,9 +36,9 @@ void main() {
             .thenAnswer((_) async => const Right(true));
       },
       build: () => tvSeriesWatchlistBloc,
-      act: (bloc) => bloc.add(WatchlistStatusGet(2)),
+      act: (bloc) => bloc.add(const WatchlistStatusGet(2)),
       expect: () => [
-        TvSeriesWatchlistStatusResult(true),
+        const TvSeriesWatchlistStatusResult(true),
       ]
     );
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(
@@ -48,9 +48,9 @@ void main() {
               .thenAnswer((_) async => Left(DatabaseFailure('asdf')));
         },
         build: () => tvSeriesWatchlistBloc,
-        act: (bloc) => bloc.add(WatchlistStatusGet(2)),
+        act: (bloc) => bloc.add(const WatchlistStatusGet(2)),
         expect: () => [
-          TvSeriesWatchlistStatusError('asdf'),
+          const TvSeriesWatchlistStatusError('asdf'),
         ]
     );
   });
@@ -59,18 +59,23 @@ void main() {
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(
       'should return true when successfully added to watchlist',
       setUp: () {
+        when(mockGetWatchlistTvSeriesStatus.execute(tvId: tTvSeriesDetail.id))
+            .thenAnswer((_) async => const Right(true));
         when(mockInsertWatchlistTvSeries.execute(tTvSeriesDetail))
-            .thenAnswer((_) async => Right(true));
+            .thenAnswer((_) async => const Right(true));
       },
       build: () => tvSeriesWatchlistBloc,
       act: (bloc) => bloc.add(WatchlistInsert(tTvSeriesDetail)),
       expect: () => [
         isA<InsertWatchlistSuccess>(),
+        const TvSeriesWatchlistStatusResult(true)
       ]
     );
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(
       'should return errror',
       setUp: () {
+        when(mockGetWatchlistTvSeriesStatus.execute(tvId: tTvSeriesDetail.id))
+            .thenAnswer((_) async => const Right(false));
         when(mockInsertWatchlistTvSeries.execute(tTvSeriesDetail))
             .thenAnswer((_) async => Left(DatabaseFailure('error: true')));
       },
@@ -78,6 +83,7 @@ void main() {
       act: (bloc) => bloc.add(WatchlistInsert(tTvSeriesDetail)),
       expect: () => [
         isA<InsertWatchlistError>(),
+        const TvSeriesWatchlistStatusResult(false)
       ]
     );
   });
@@ -86,25 +92,31 @@ void main() {
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(
       'should return success',
       setUp: () {
+        when(mockGetWatchlistTvSeriesStatus.execute(tvId: tTvSeriesDetail.id))
+            .thenAnswer((_) async => const Right(false));
         when(mockRemoveWatchlistTvSeries.execute(2))
             .thenAnswer((_) async => const Right(true));
       },
       build: () => tvSeriesWatchlistBloc,
-      act: (bloc) => bloc.add(WatchlistRemove(2)),
+      act: (bloc) => bloc.add(const WatchlistRemove(2)),
       expect: () => [
         isA<RemoveWatchlistSuccess>(),
+        const TvSeriesWatchlistStatusResult(false)
       ]
     );
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(
         'should return errror',
         setUp: () {
+          when(mockGetWatchlistTvSeriesStatus.execute(tvId: tTvSeriesDetail.id))
+              .thenAnswer((_) async => const Right(true));
           when(mockRemoveWatchlistTvSeries.execute(2))
               .thenAnswer((_) async => Left(DatabaseFailure('error: true')));
         },
         build: () => tvSeriesWatchlistBloc,
-        act: (bloc) => bloc.add(WatchlistRemove(2)),
+        act: (bloc) => bloc.add(const WatchlistRemove(2)),
         expect: () => [
           isA<RemoveWatchlistError>(),
+          const TvSeriesWatchlistStatusResult(true)
         ]
     );
   });

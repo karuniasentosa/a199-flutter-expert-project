@@ -39,6 +39,8 @@ class TvSeriesWatchlistBloc extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchli
         (l) => emitter(InsertWatchlistError(l.message)),
         (r) => emitter(const InsertWatchlistSuccess())
     );
+
+    add(WatchlistStatusGet(tvDetail.id));
   }
 
   Future _onWatchlistRemove(WatchlistRemove evt, Emitter emitter) async {
@@ -48,6 +50,8 @@ class TvSeriesWatchlistBloc extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchli
         (l) => emitter(RemoveWatchlistError(l.message)),
         (r) => emitter(const RemoveWatchlistSuccess())
     );
+
+    add(WatchlistStatusGet(tvId));
   }
 
 

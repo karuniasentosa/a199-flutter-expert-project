@@ -123,7 +123,8 @@ class _DetailContentState extends State<DetailContent> {
                               builder: (BuildContext context,
                                   MovieWatchlistState state) {
                                 final isAddedWatchlist =
-                                    (state as MovieWatchlistStatus).watchlisted;
+                                (state is MovieWatchlistInitial) ? false // initial check
+                                    : (state as MovieWatchlistStatus).watchlisted;
                                 return ElevatedButton(
                                     onPressed: () {
                                       if (!isAddedWatchlist) {
@@ -157,6 +158,7 @@ class _DetailContentState extends State<DetailContent> {
                                 if (state is MovieRemoveWatchlistSuccess) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
+                                          duration: Duration(seconds: 2),
                                           content: Text(
                                               'remove watchlist success')));
                                 } else if (state is MovieRemoveWatchlistError) {
@@ -171,6 +173,7 @@ class _DetailContentState extends State<DetailContent> {
                                 if (state is MovieInsertWatchlistSuccess) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       SnackBar(
+                                          duration: const Duration(seconds: 2),
                                           content: Text(
                                               'insert watchlist ${state.message}')));
                                 } else if (state is MovieRemoveWatchlistError) {

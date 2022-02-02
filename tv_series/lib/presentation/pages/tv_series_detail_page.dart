@@ -69,6 +69,7 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
     context
         .read<TvSeriesWatchlistBloc>()
         .add(WatchlistStatusGet(widget.tvSeries.id));
+    context.read<TvSeriesRecommendationCubit>()(widget.tvSeries.id);
     super.initState();
   }
 
@@ -123,6 +124,7 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                   if (state is InsertWatchlistSuccess) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
+                                            duration: Duration(seconds: 2),
                                             content: Text(
                                                 'insert watchlist success')));
                                   } else if (state is InsertWatchlistError) {
@@ -138,9 +140,10 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                   if (state is RemoveWatchlistSuccess) {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(
+                                            duration: Duration(seconds: 2),
                                             content: Text(
                                                 'remove watchlist success')));
-                                  } else if (state is RemoveWatchlistError){
+                                  } else if (state is RemoveWatchlistError) {
                                     showDialog(
                                         context: context,
                                         builder: (context) {
@@ -154,16 +157,23 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                     current is TvSeriesInsertWatchlistState ||
                                     current is TvSeriesRemoveWatchlistState,
                                 builder: (context, state) {
-                                  final isAddedToWatchlist =
-                                      (state as TvSeriesWatchlistStatusResult).watchlisted;
+                                  final isAddedToWatchlist = (state
+                                          is TvSeriesWatchlistInitial)
+                                      ? false
+                                      : (state as TvSeriesWatchlistStatusResult)
+                                          .watchlisted;
                                   return ElevatedButton(
                                       onPressed: () async {
                                         if (!isAddedToWatchlist) {
-                                          context.read<TvSeriesWatchlistBloc>()
-                                              .add(WatchlistInsert(widget.tvSeries));
+                                          context
+                                              .read<TvSeriesWatchlistBloc>()
+                                              .add(WatchlistInsert(
+                                                  widget.tvSeries));
                                         } else {
-                                          context.read<TvSeriesWatchlistBloc>()
-                                              .add(WatchlistRemove(widget.tvSeries.id));
+                                          context
+                                              .read<TvSeriesWatchlistBloc>()
+                                              .add(WatchlistRemove(
+                                                  widget.tvSeries.id));
                                         }
                                       },
                                       child: Row(
@@ -176,6 +186,8 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                         ],
                                       ));
                                 },
+                                buildWhen: (prev, current) =>
+                                    current is TvSeriesWatchlistStatusResult,
                               ),
                               Text(_showGenres(widget.tvSeries.genres)),
                               Text(_describeSeasonsEpisodes(
@@ -220,7 +232,8 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                               const SizedBox(height: 16),
                               Text('Recommendations',
                                   style: Theme.of(context).textTheme.headline6),
-                              BlocBuilder<TvSeriesRecommendationCubit, TvSeriesRecommendationState>(
+                              BlocBuilder<TvSeriesRecommendationCubit,
+                                  TvSeriesRecommendationState>(
                                 builder: (context, state) {
                                   if (state is TvSeriesRecommendationLoading) {
                                     return const SizedBox(
@@ -229,7 +242,8 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                           child: Text(
                                               'Fetching recommendations...')),
                                     );
-                                  } else if (state is TvSeriesRecommendationResult) {
+                                  } else if (state
+                                      is TvSeriesRecommendationResult) {
                                     if (state.tvSeries.isEmpty) {
                                       return const SizedBox(
                                         height: 32,
@@ -238,9 +252,15 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                                 'No recommendations available')),
                                       );
                                     } else {
-                                      final list =
-                                          state.tvSeries;
-                                      return TvSeriesList(list);
+                                      final list = state.tvSeries;
+                                      return TvSeriesList(list,
+                                          onTap: (series) {
+                                        Navigator.pushReplacementNamed(
+                                          context,
+                                          TvSeriesDetailPage.routeName,
+                                          arguments: series.id,
+                                        );
+                                      });
                                     }
                                   } else {
                                     return const Text('unknown error');

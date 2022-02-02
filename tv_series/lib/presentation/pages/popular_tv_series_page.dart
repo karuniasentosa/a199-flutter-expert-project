@@ -1,8 +1,9 @@
-import 'package:ditonton/common/state_enum.dart';
-import 'package:ditonton/presentation/provider/tv_series/popular_tv_series_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import '../widgets/tv_series_card_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../bloc/popular_tv_series_page_bloc.dart';
 
 class PopularTvSeriesPage extends StatefulWidget {
   static const routeName = '/now-playing-tv';
@@ -18,8 +19,7 @@ class _PopularTvSeriesPage extends State<PopularTvSeriesPage> {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<PopularTvSeriesNotifier>(context, listen: false)
-            .fetchPopularTvSeries()
+        context.read<PopularTvSeriesCubit>()()
     );
   }
 
@@ -31,25 +31,27 @@ class _PopularTvSeriesPage extends State<PopularTvSeriesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<PopularTvSeriesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<PopularTvSeriesCubit, PopularTvSeriesState>(
+          builder: (context, state) {
+            if (state is PopularTvSeriesLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is PopularTvSeriesResult) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvSeries = data.tvSeries[index];
+                  final tvSeries = state.tvSeries[index];
                   return TvSeriesCard(tvSeries);
                 },
-                itemCount: data.tvSeries.length,
+                itemCount: state.tvSeries.length,
               );
-            } else {
+            } else if (state is PopularTvSeriesError){
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.errorMessage),
               );
+            } else {
+              return Container();
             }
           },
         ),

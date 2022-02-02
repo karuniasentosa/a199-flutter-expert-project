@@ -23,12 +23,18 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask((){
+    Future.microtask(() {
       context.read<PopularTvSeriesCubit>()();
       context.read<NowPlayingTvSeriesCubit>()();
       context.read<TopRatedTvSeriesCubit>()();
     });
   }
+
+  void onTapTvSeries(TvSeries series) => Navigator.pushNamed(
+        context,
+        TvSeriesDetailPage.routeName,
+        arguments: series.id,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +57,12 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is NowPlayingTvSeriesResult) {
-                return TvSeriesList(state.tvSeries);
+                return TvSeriesList(
+                  state.tvSeries,
+                  onTap: onTapTvSeries,
+                );
               } else if (state is NowPlayingTvSeriesError) {
-                return Text(
-                    'An Error occurred: ${state.errorMessage}');
+                return Text('An Error occurred: ${state.errorMessage}');
               } else {
                 return Container();
               }
@@ -71,10 +79,12 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   child: CircularProgressIndicator(),
                 );
               } else if (state is PopularTvSeriesResult) {
-                return TvSeriesList(state.tvSeries);
+                return TvSeriesList(
+                  state.tvSeries,
+                  onTap: onTapTvSeries,
+                );
               } else if (state is PopularTvSeriesError) {
-                return Text(
-                    'Erro r occured: ${state.errorMessage}');
+                return Text('Erro r occured: ${state.errorMessage}');
               } else {
                 return Container();
               }
@@ -85,10 +95,12 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
               if (state is TopRatedTvSeriesLoading) {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is TopRatedTvSeriesResult) {
-                return TvSeriesList(state.tvSeries);
+                return TvSeriesList(
+                  state.tvSeries,
+                  onTap: onTapTvSeries,
+                );
               } else if (state is TopRatedTvSeriesError) {
-                return Text(
-                    'Error occured: ${state.errorMessage}');
+                return Text('Error occured: ${state.errorMessage}');
               } else {
                 return Container();
               }
@@ -111,7 +123,10 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
-                    children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
+                    children: const [
+                      Text('See More'),
+                      Icon(Icons.arrow_forward_ios)
+                    ],
                   ),
                 ),
               )
@@ -123,8 +138,9 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
 
 class TvSeriesList extends StatelessWidget {
   final List<TvSeries> tvSeries;
+  final Function(TvSeries)? onTap;
 
-  const TvSeriesList(this.tvSeries, {Key? key}): super(key: key);
+  const TvSeriesList(this.tvSeries, {this.onTap, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -138,16 +154,15 @@ class TvSeriesList extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TvSeriesDetailPage.routeName,
-                  arguments: series.id,
-                );
+                if (onTap != null) {
+                  onTap!(series);
+                }
               },
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(16)),
                 child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w500${series.posterPath}',
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w500${series.posterPath}',
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),
                   ),

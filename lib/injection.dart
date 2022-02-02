@@ -1,9 +1,11 @@
 import 'package:core/core.dart' show DatabaseHelper;
+import 'package:movie/data/datasources/db/movie_database_helper.dart';
 
 import 'package:movie/usecases.dart';
 import 'package:movie/datasources.dart';
 import 'package:movie/repositories.dart';
 import 'package:movie/blocs.dart';
+import 'package:tv_series/data/datasources/db/tv_series_database_helper.dart';
 
 import 'package:tv_series/usecases.dart';
 import 'package:tv_series/datasources.dart';
@@ -34,6 +36,7 @@ void init() {
 
   locator.registerFactory(() => PopularTvSeriesCubit(locator()));
   locator.registerFactory(() => NowPlayingTvSeriesCubit(locator()));
+  locator.registerFactory(() => TopRatedTvSeriesCubit(locator()));
   locator.registerFactory(() => TvSeriesDetailCubit(locator()));
   locator.registerFactory(() => TvSeriesRecommendationCubit(locator()));
   locator.registerFactory(() => TvSeriesWatchlistBloc(
@@ -97,6 +100,8 @@ void init() {
 
   // helper
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
+  locator.registerLazySingleton<MovieDatabaseHelper>(() => MovieDatabaseHelper());
+  locator.registerLazySingleton<TvSeriesDatabaseHelper>(() => TvSeriesDatabaseHelper());
 
   // external
   locator.registerLazySingleton(() => http.Client());

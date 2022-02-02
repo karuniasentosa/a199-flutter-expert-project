@@ -7,13 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/tv_series.dart' show PopularTvSeriesPage, TvSeriesDetailPage;
 import 'package:movie/pages.dart' show PopularMoviesPage, MovieDetailPage, TopRatedMoviesPage;
 import 'package:movie/blocs.dart';
+import 'package:tv_series/blocs.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
-import 'package:ditonton/presentation/provider/tv_series/popular_tv_series_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_detail_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_list_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_watchlist_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,21 +46,29 @@ class MyApp extends StatelessWidget {
         BlocProvider<WatchlistMoviesCubit>(
           create: (_) => di.locator<WatchlistMoviesCubit>()
         ),
-
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesListNotifier>(),
+        BlocProvider<PopularTvSeriesCubit>(
+          create: (_) => di.locator<PopularTvSeriesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvSeriesNotifier>(),
+        BlocProvider<NowPlayingTvSeriesCubit>(
+          create: (_) => di.locator<NowPlayingTvSeriesCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesDetailNotifier>(),
+        BlocProvider(
+          create: (_) => di.locator<TopRatedTvSeriesCubit>()
         ),
-        ChangeNotifierProvider(
-            create: (_) => di.locator<TvSeriesSearchNotifier>()
+        BlocProvider(
+          create: (_) => di.locator<TvSeriesDetailCubit>(),
         ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvSeriesWatchlistNotifier>()
+        BlocProvider(
+          create: (_) => di.locator<TvSeriesWatchlistBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<TvSeriesRecommendationCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => di.locator<SearchTvSeriesCubit>()
+        ),
+        BlocProvider(
+          create: (_) => di.locator<WatchlistTvSeriesCubit>()
         )
       ],
       child: MaterialApp(

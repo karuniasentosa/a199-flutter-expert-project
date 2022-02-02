@@ -10,8 +10,6 @@ import 'package:tv_series/datasources.dart';
 import 'package:tv_series/repositories.dart';
 import 'package:tv_series/blocs.dart';
 
-import 'package:ditonton/presentation/provider/tv_series/tv_series_search_notifier.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_watchlist_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
@@ -43,10 +41,8 @@ void init() {
     insertWatchlistTvSeries: locator(),
     removeWatchlistTvSeries: locator()
   ));
-  locator.registerFactory(() => TvSeriesSearchNotifier(locator()));
-  locator.registerFactory(() => TvSeriesWatchlistNotifier(
-      getWatchlistTvSeries: locator())
-  );
+  locator.registerFactory(() => SearchTvSeriesCubit(locator()));
+  locator.registerFactory(() => WatchlistTvSeriesCubit(locator()));
 
 
   // use case

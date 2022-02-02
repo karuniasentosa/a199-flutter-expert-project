@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/common/state_enum.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tv_series/presentation/bloc/top_rated_tv_series/top_rated_tv_series_cubit.dart';
 import '../../domain/entities/tv_series.dart';
 import 'now_playing_tv_series_page.dart';
 import 'popular_tv_series_page.dart';
 import 'tv_series_detail_page.dart';
-import 'package:ditonton/presentation/provider/tv_series/tv_series_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../bloc/tv_series_list_page_bloc.dart';
 
 class TvSeriesListPage extends StatefulWidget {
   static const routeName = '/home-tv';
@@ -22,11 +23,11 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-        () => Provider.of<TvSeriesListNotifier>(context, listen: false)
-          ..fetchPopularTvSeries()
-          ..fetchTopRatedTvSeries()
-          ..fetchNowPlayingTvSeries());
+    Future.microtask((){
+      context.read<PopularTvSeriesCubit>()();
+      context.read<NowPlayingTvSeriesCubit>()();
+      context.read<TopRatedTvSeriesCubit>()();
+    });
   }
 
   @override
@@ -43,19 +44,19 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   Navigator.pushNamed(
                       context, NowPlayingTvSeriesPage.routeName);
                 }),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.nowPlayingTvSeriesState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<NowPlayingTvSeriesCubit, NowPlayingTvSeriesState>(
+                builder: (context, state) {
+              if (state is NowPlayingTvSeriesLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.nowPlayingTvSeriesList);
-              } else if (state == RequestState.Empty) {
-                return const Text('No now playing tv series available :(');
-              } else {
+              } else if (state is NowPlayingTvSeriesResult) {
+                return TvSeriesList(state.tvSeries);
+              } else if (state is NowPlayingTvSeriesError) {
                 return Text(
-                    'An Error occurred: ${data.topRatedTvSeriesErrorMessage}');
+                    'An Error occurred: ${state.errorMessage}');
+              } else {
+                return Container();
               }
             }),
             _buildSubHeading(
@@ -63,33 +64,33 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                 onTap: () {
                   Navigator.pushNamed(context, PopularTvSeriesPage.routeName);
                 }),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.popularTvSeriesState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<PopularTvSeriesCubit, PopularTvSeriesState>(
+                builder: (context, state) {
+              if (state is PopularTvSeriesLoading) {
                 return const Center(
                   child: CircularProgressIndicator(),
                 );
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.popularTvSeriesList);
-              } else if (state == RequestState.Empty) {
-                return const Text('No popular tv series available :(');
-              } else {
+              } else if (state is PopularTvSeriesResult) {
+                return TvSeriesList(state.tvSeries);
+              } else if (state is PopularTvSeriesError) {
                 return Text(
-                    'Erro r occured: ${data.popularTvSeriesErrorMessage}');
+                    'Erro r occured: ${state.errorMessage}');
+              } else {
+                return Container();
               }
             }),
             _buildSubHeading(title: 'Top Rated', onTap: null),
-            Consumer<TvSeriesListNotifier>(builder: (context, data, child) {
-              final state = data.topRatedTvSeriesState;
-              if (state == RequestState.Loading) {
+            BlocBuilder<TopRatedTvSeriesCubit, TopRatedTvSeriesState>(
+                builder: (context, state) {
+              if (state is TopRatedTvSeriesLoading) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (state == RequestState.Loaded) {
-                return TvSeriesList(data.topRatedTvSeriesList);
-              } else if (state == RequestState.Empty) {
-                return const Text('No top rated tv series avaibale :(');
-              } else {
+              } else if (state is TopRatedTvSeriesResult) {
+                return TvSeriesList(state.tvSeries);
+              } else if (state is TopRatedTvSeriesError) {
                 return Text(
-                    'Error occured: ${data.topRatedTvSeriesErrorMessage}');
+                    'Error occured: ${state.errorMessage}');
+              } else {
+                return Container();
               }
             }),
           ],

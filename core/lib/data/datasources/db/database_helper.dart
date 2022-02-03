@@ -10,6 +10,7 @@ class DatabaseHelper {
 
   DatabaseHelper._() {
     _databaseHelper = this;
+    database;
   }
 
   factory DatabaseHelper() => _databaseHelper ?? DatabaseHelper._();

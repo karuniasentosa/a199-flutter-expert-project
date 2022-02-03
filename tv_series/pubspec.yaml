@@ -30,5 +30,3 @@ dev_dependencies:
   mockito: ^5.0.17
 
 flutter:
-  assets:
-    - cert/_.themoviedb.org.pem

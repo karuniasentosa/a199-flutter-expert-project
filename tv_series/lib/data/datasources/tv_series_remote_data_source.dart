@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:core/core.dart' show DatabaseException, ServerException;
+import 'package:core/core.dart' show ServerException;
+import 'package:http/io_client.dart';
 import '../models/tv_series_detail_model.dart';
 import '../models/tv_series_model.dart';
 import '../models/tv_series_response.dart';
-import 'package:http/http.dart' as http;
 
 abstract class TvSeriesRemoteDataSource {
   Future<List<TvSeriesModel>> getPopularTvSeries();
@@ -20,11 +20,11 @@ class TvSeriesRemoteDataSourceImpl extends TvSeriesRemoteDataSource {
   static const _baseUrl = 'api.themoviedb.org';
   static const _queryParams = { 'api_key': _apiKey };
 
-  final http.Client client;
+  final IOClient client;
 
-  TvSeriesRemoteDataSourceImpl({required this.client});
+  TvSeriesRemoteDataSourceImpl({required this.client})
   
-  @override
+  ;@override
   Future<List<TvSeriesModel>> getPopularTvSeries() async {
     final uri = Uri.https(_baseUrl, '3/tv/popular', _queryParams);
     final response = await client.get(uri);
@@ -86,7 +86,7 @@ class TvSeriesRemoteDataSourceImpl extends TvSeriesRemoteDataSource {
 
   @override
   Future<List<TvSeriesModel>> searchTvSeries({required String query}) async {
-    final Map<String, String> searchQueryParams = Map()
+    final Map<String, String> searchQueryParams = {}
       ..addAll(_queryParams)
       ..addAll({'query': query});
 

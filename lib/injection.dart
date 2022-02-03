@@ -1,4 +1,8 @@
+import 'dart:io';
+
 import 'package:core/core.dart' show DatabaseHelper;
+import 'package:flutter/services.dart';
+import 'package:http/io_client.dart';
 import 'package:movie/data/datasources/db/movie_database_helper.dart';
 
 import 'package:movie/usecases.dart';
@@ -12,13 +16,21 @@ import 'package:tv_series/datasources.dart';
 import 'package:tv_series/repositories.dart';
 import 'package:tv_series/blocs.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 
 
 final locator = GetIt.instance;
 
 void init() {
+  // external
+  locator.registerSingletonAsync<IOClient>(() async {
+    final byteData = await rootBundle.load('cert/_.themoviedb.org.pem');
+    final securityContext = SecurityContext()
+      ..setTrustedCertificatesBytes(byteData.buffer.asInt8List());
+    final http = HttpClient(context: securityContext);
+    return IOClient(http);
+  });
+
   // provider
   locator.registerFactory(() => NowPlayingMoviesCubit(locator()));
   locator.registerFactory(() => PopularMoviesCubit(locator()));
@@ -71,38 +83,41 @@ void init() {
   locator.registerLazySingleton(() => RemoveWatchlistTvSeries(locator()));
   locator.registerLazySingleton(() => GetWatchlistTvSeries(locator()));
 
-  // repository
-  locator.registerLazySingleton<MovieRepository>(
-    () => MovieRepositoryImpl(
-      remoteDataSource: locator(),
-      localDataSource: locator(),
-    ),
-  );
-
-  locator.registerLazySingleton<TvSeriesRepository>(
-          () => TvSeriesRepositoryImpl(
-              remoteDataSource: locator(),
-              localDataSource:  locator(),
-          )
-  );
+  // helper
+  locator.registerSingleton<DatabaseHelper>(DatabaseHelper());
+  locator.registerSingleton<MovieDatabaseHelper>(MovieDatabaseHelper());
+  locator.registerSingleton<TvSeriesDatabaseHelper>(TvSeriesDatabaseHelper());
 
   // data sources
-  locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+  locator.registerSingletonWithDependencies<MovieRemoteDataSource>(
+      () => MovieRemoteDataSourceImpl(client: locator()),
+      dependsOn: [IOClient]
+  );
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
-  locator.registerLazySingleton<TvSeriesRemoteDataSource>(
-      () => TvSeriesRemoteDataSourceImpl(client: locator())
+  locator.registerSingletonWithDependencies<TvSeriesRemoteDataSource>(
+      () => TvSeriesRemoteDataSourceImpl(client: locator()),
+      dependsOn: [IOClient]
   );
   locator.registerLazySingleton<TvSeriesLocalDataSource>(
-          () => TvSeriesLocalDataSourceImpl(databaseHelper: locator()));
+          () => TvSeriesLocalDataSourceImpl(databaseHelper: locator())
+  );
 
-  // helper
-  locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
-  locator.registerLazySingleton<MovieDatabaseHelper>(() => MovieDatabaseHelper());
-  locator.registerLazySingleton<TvSeriesDatabaseHelper>(() => TvSeriesDatabaseHelper());
+  // repository
+  locator.registerSingletonWithDependencies<MovieRepository>(
+          () => MovieRepositoryImpl(
+        remoteDataSource: locator(),
+        localDataSource: locator(),
+      ),
+      dependsOn: [MovieRemoteDataSource]
+  );
 
-  // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerSingletonWithDependencies<TvSeriesRepository>(
+          () => TvSeriesRepositoryImpl(
+        remoteDataSource: locator(),
+        localDataSource:  locator(),
+      ),
+      dependsOn: [TvSeriesRemoteDataSource]
+  );
 }

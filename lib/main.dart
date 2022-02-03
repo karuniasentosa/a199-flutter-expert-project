@@ -6,6 +6,7 @@ import 'package:ditonton/presentation/pages/home_page.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
 
@@ -17,8 +18,10 @@ import 'package:movie/blocs.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // to ensure that rootBundle can be accessed and not returning null.
   di.init();
+  await di.locator.isReady<IOClient>(); // wait for [IOClient] to be ready, otherwise, we cannot use other things
   runApp(MyApp());
 }
 

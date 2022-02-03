@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:core/exception.dart';
+import 'package:http/io_client.dart';
 import 'package:mockito/annotations.dart';
 import 'package:tv_series/data/datasources/tv_series_remote_data_source.dart';
 import 'package:tv_series/data/models/tv_series_detail_model.dart';
@@ -15,10 +16,7 @@ import '../../json_reader.dart';
 import 'tv_series_remote_data_source_test.mocks.dart';
 
 @GenerateMocks(
-    [],
-    customMocks: [
-      MockSpec<http.Client>(as: #MockHttpClient)
-    ]
+    [IOClient],
 )
 void main() {
   const apiKey = '2174d146bb9c0eab47529b2e77d6b526';
@@ -26,11 +24,11 @@ void main() {
   const queryParams = {'api_key': apiKey};
 
   late TvSeriesRemoteDataSourceImpl dataSource;
-  late MockHttpClient mockHttpClient;
+  late MockIOClient mockIoClient;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    dataSource = TvSeriesRemoteDataSourceImpl(client: mockHttpClient);
+    mockIoClient = MockIOClient();
+    dataSource = TvSeriesRemoteDataSourceImpl(client: mockIoClient);
   });
 
   group('get popular tv series', () {
@@ -45,7 +43,7 @@ void main() {
 
       // > The Response class uses Latin-1 encoding for the body unless something else is specified.
       // https://stackoverflow.com/questions/52990816/dart-json-encodedata-can-not-accept-other-language/52993623#52993623
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response(
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response(
               readJson('dummy_data/popular_show.json'), 200, headers: {
             HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
           }));
@@ -65,7 +63,7 @@ void main() {
         () async {
       // arrange
       final uri = Uri.https(baseUrl, '/3/tv/on_the_air', queryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response(
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response(
               readJson('dummy_data/popular_show.json'), 200, headers: {
             HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
           }));
@@ -87,7 +85,7 @@ void main() {
     test('should return tv detail when response is success(200)', () async {
       // arrange
       final uri = Uri.https(baseUrl, '/3/tv/$tvId', queryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response(json, 200));
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response(json, 200));
 
       // act
       final result = await dataSource.getTvSeriesDetail(id: tvId);
@@ -99,7 +97,7 @@ void main() {
     test('should throw exception when other response is received', () {
       // arrange
       final uri = Uri.https(baseUrl, '/3/tv/$tvId', queryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response('', 404));
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response('', 404));
 
       // act
       final result = dataSource.getTvSeriesDetail(id: tvId);
@@ -116,7 +114,7 @@ void main() {
     test('should return tv recommendations from selected id', () async {
       // ararnge
       final uri = Uri.https(baseUrl, '/3/tv/$tvId/recommendations', queryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response(json, 200, headers: {
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response(json, 200, headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
       }));
 
@@ -131,7 +129,7 @@ void main() {
       // arrange
       // ararnge
       final uri = Uri.https(baseUrl, '/3/tv/$tvId/recommendations', queryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response('', 201));
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response('', 201));
 
       // act
       final result = dataSource.getTvSeriesRecommendations(id: tvId);
@@ -153,7 +151,7 @@ void main() {
     test('should return search response when query is sent', () async {
       // arrange
       final uri = Uri.https(baseUrl, '/3/search/tv/', searchQueryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response(json, 200, headers: {
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response(json, 200, headers: {
         HttpHeaders.contentTypeHeader: 'application/json; charset=utf-8'
       }));
 
@@ -167,7 +165,7 @@ void main() {
     test("should return error when          response is not 200", () async {
       // arrange
       final uri = Uri.https(baseUrl, '/3/search/tv/', searchQueryParams);
-      when(mockHttpClient.get(uri)).thenAnswer((_) async => http.Response('', 404));
+      when(mockIoClient.get(uri)).thenAnswer((_) async => http.Response('', 404));
 
       // act
       final result = dataSource.searchTvSeries(query: query);

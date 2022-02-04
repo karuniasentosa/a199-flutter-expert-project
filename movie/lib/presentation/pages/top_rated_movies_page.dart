@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/top_rated_movies_page_bloc.dart';
 
@@ -41,6 +42,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                 itemCount: state.movies.length,
               );
             } else if (state is TopRatedMoviesError){
+              FirebaseCrashlytics.instance.log('TopRatedMoviesPage TopRatedMovies error: ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../bloc/popular_tv_series_page_bloc.dart';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 class PopularTvSeriesPage extends StatefulWidget {
   static const routeName = '/popular-tv';
 
@@ -46,6 +48,7 @@ class _PopularTvSeriesPage extends State<PopularTvSeriesPage> {
                 itemCount: state.tvSeries.length,
               );
             } else if (state is PopularTvSeriesError){
+              FirebaseCrashlytics.instance.log('PopularTvSeriesPage PopularTvSeries error ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../domain/entities/movie.dart';
 import 'movie_detail_page.dart';
@@ -47,6 +48,7 @@ class _MovieListPageState extends State<MovieListPage> {
                 } else if (state is NowPlayingMoviesResult) {
                   return MovieList(state.movieList);
                 } else if (state is NowPlayingMoviesError) {
+                  FirebaseCrashlytics.instance.log('MovieListPage NowPlayingMovies error: ${state.errorMessage}');
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();
@@ -66,6 +68,7 @@ class _MovieListPageState extends State<MovieListPage> {
                 } else if (state is PopularMoviesResult) {
                   return MovieList(state.movies);
                 } else if (state is PopularMoviesError) {
+                  FirebaseCrashlytics.instance.log('MovieListPage PopularMovies error: ${state.errorMessage}');
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();
@@ -85,6 +88,7 @@ class _MovieListPageState extends State<MovieListPage> {
                 } else if (state is TopRatedMoviesResult) {
                   return MovieList(state.movies);
                 } else if (state is TopRatedMoviesError) {
+                  FirebaseCrashlytics.instance.log('MovieListPage TopRatedMovies error: ${state.errorMessage}');
                   return Text('Failed: ${state.errorMessage}');
                 } else {
                   return Container();

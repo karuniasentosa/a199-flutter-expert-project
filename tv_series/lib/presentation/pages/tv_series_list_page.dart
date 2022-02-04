@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/presentation/bloc/top_rated_tv_series/top_rated_tv_series_cubit.dart';
 import '../../domain/entities/tv_series.dart';
@@ -62,6 +63,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is NowPlayingTvSeriesError) {
+                FirebaseCrashlytics.instance.log('TvSeriesListPage NowPlayingTvSeries error: ${state.errorMessage}');
                 return Text('An Error occurred: ${state.errorMessage}');
               } else {
                 return Container();
@@ -84,6 +86,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is PopularTvSeriesError) {
+                FirebaseCrashlytics.instance.log('TvSeriesListPage PopularTvSeries error ${state.errorMessage}');
                 return Text('Erro r occured: ${state.errorMessage}');
               } else {
                 return Container();
@@ -100,6 +103,7 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is TopRatedTvSeriesError) {
+                FirebaseCrashlytics.instance.log('TvSeriesListPage TopRatedTvSeries error ${state.errorMessage}');
                 return Text('Error occured: ${state.errorMessage}');
               } else {
                 return Container();

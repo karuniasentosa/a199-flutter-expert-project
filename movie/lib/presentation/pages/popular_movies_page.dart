@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/popular_movies_page_bloc.dart';
 
@@ -41,6 +42,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                 itemCount: state.movies.length,
               );
             } else if (state is PopularMoviesError){
+              FirebaseCrashlytics.instance.log('PopularMoviesPage PopularMovies error: ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

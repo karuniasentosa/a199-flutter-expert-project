@@ -18,10 +18,13 @@ import 'package:movie/blocs.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_page.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // to ensure that rootBundle can be accessed and not returning null.
   di.init();
-  await di.locator.isReady<IOClient>(); // wait for [IOClient] to be ready, otherwise, we cannot use other things
+  await di.locator.isReady<IOClient>(); // wait for [IOClient] to be ready, otherwise, we cannot eat.
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

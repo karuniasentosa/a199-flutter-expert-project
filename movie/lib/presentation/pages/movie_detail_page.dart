@@ -5,6 +5,8 @@ import 'package:movie/domain/entities/movie_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import '../bloc/movie_detail_page_blocs.dart';
 
 import 'package:core/core.dart' show AppColors;
@@ -44,6 +46,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               child: DetailContent(movie),
             );
           } else if (state is MovieDetailError) {
+            FirebaseCrashlytics.instance.log('MovieDetail fetch error: ${state.errorMessage}');
             return Text(state.errorMessage);
           } else {
             return Container();
@@ -162,6 +165,7 @@ class _DetailContentState extends State<DetailContent> {
                                           content: Text(
                                               'remove watchlist success')));
                                 } else if (state is MovieRemoveWatchlistError) {
+                                  FirebaseCrashlytics.instance.log('MovieDetail removewatchlist error: ${state.message}');
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -176,7 +180,8 @@ class _DetailContentState extends State<DetailContent> {
                                           duration: const Duration(seconds: 2),
                                           content: Text(
                                               'insert watchlist ${state.message}')));
-                                } else if (state is MovieRemoveWatchlistError) {
+                                } else if (state is MovieInsertWatchlistError) {
+                                  FirebaseCrashlytics.instance.log('MovieDetail insertwatchlist error: ${state.message}');
                                   showDialog(
                                       context: context,
                                       builder: (context) {

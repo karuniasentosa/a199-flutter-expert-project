@@ -8,14 +8,13 @@ part 'watchlist_tv_series_state.dart';
 class WatchlistTvSeriesCubit extends Cubit<WatchlistTvSeriesState> {
   final GetWatchlistTvSeries getWatchlistTvSeries;
 
-  WatchlistTvSeriesCubit(this.getWatchlistTvSeries) : super(WatchlistTvSeriesInitial());
+  WatchlistTvSeriesCubit(this.getWatchlistTvSeries)
+      : super(WatchlistTvSeriesInitial());
 
   Future call() async {
     emit(const WatchlistTvSeriesLoading());
     final result = await getWatchlistTvSeries.execute();
-    result.fold(
-        (l) => emit(WatchlistTvSeriesError(l.message)),
-        (r) => emit(WatchlistTvSeriesResult(r))
-    );
+    result.fold((l) => emit(WatchlistTvSeriesError(l.message)),
+        (r) => emit(WatchlistTvSeriesResult(r)));
   }
 }

@@ -5,10 +5,13 @@ class MovieDatabaseHelper {
   static const String _tblMovieWatchlist = 'movie_watchlist';
   static MovieDatabaseHelper? _instance;
   static Database? _database;
-  
-  MovieDatabaseHelper._() { _instance = this; }
+
+  MovieDatabaseHelper._() {
+    _instance = this;
+  }
+
   factory MovieDatabaseHelper() => _instance ??= MovieDatabaseHelper._();
-  
+
   Future<Database?> get database async => _database ??= await _initDb();
 
   Future<Database> _initDb() async {
@@ -51,9 +54,8 @@ class MovieDatabaseHelper {
   Future<List<Map<String, dynamic>>> getWatchlistMovies() async {
     final db = await database;
     final List<Map<String, dynamic>> results =
-    await db!.query(_tblMovieWatchlist);
+        await db!.query(_tblMovieWatchlist);
 
     return results;
   }
 }
-

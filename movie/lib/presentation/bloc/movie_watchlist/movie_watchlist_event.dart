@@ -15,18 +15,18 @@ class WatchlistStatusGet extends MovieWatchlistEvent {
 
 class WatchlistInsert extends MovieWatchlistEvent {
   final MovieDetail movieDetail;
-  
+
   const WatchlistInsert(this.movieDetail);
-  
+
   @override
   List<Object?> get props => [movieDetail];
 }
 
 class WatchlistRemove extends MovieWatchlistEvent {
   final MovieDetail movieDetail;
-  
+
   const WatchlistRemove(this.movieDetail);
-  
+
   @override
   List<Object?> get props => [movieDetail];
 }

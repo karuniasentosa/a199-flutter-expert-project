@@ -1,7 +1,7 @@
 library movie;
 
-export 'usecases.dart';
-export 'pages.dart';
 export 'datasources.dart';
+export 'pages.dart';
 export 'repositories.dart';
+export 'usecases.dart';
 export 'widgets.dart';

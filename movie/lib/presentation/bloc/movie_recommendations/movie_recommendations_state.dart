@@ -6,17 +6,17 @@ abstract class MovieRecommendationsState extends Equatable {
 }
 
 class MovieRecommendationsInitial extends MovieRecommendationsState {
-  const MovieRecommendationsInitial(): super();
+  const MovieRecommendationsInitial() : super();
 
   @override
   List<Object?> get props => [];
 }
 
 class MovieRecommendationsLoading extends MovieRecommendationsState {
-  const MovieRecommendationsLoading(): super();
+  const MovieRecommendationsLoading() : super();
 
   @override
-  List<Object?> get props =>[];
+  List<Object?> get props => [];
 }
 
 class MovieRecommendationsResult extends MovieRecommendationsState {

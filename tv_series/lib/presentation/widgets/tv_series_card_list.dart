@@ -1,12 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
 import '../../domain/entities/tv_series.dart';
 import '../pages/tv_series_detail_page.dart';
-import 'package:flutter/material.dart';
 
 class TvSeriesCard extends StatelessWidget {
   final TvSeries tvSeries;
 
-  const TvSeriesCard(this.tvSeries, {Key? key}): super(key: key);
+  const TvSeriesCard(this.tvSeries, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,8 @@ class TvSeriesCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w500${tvSeries.posterPath}',
                   width: 80,
                   placeholder: (context, url) => const Center(
                     child: CircularProgressIndicator(),

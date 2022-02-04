@@ -11,6 +11,7 @@ class SearchTvSeriesInitial extends SearchTvSeriesState {
 
 class SearchTvSeriesLoading extends SearchTvSeriesState {
   const SearchTvSeriesLoading();
+
   @override
   List<Object?> get props => [];
 }

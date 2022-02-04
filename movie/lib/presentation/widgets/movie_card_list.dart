@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+
 import '../../domain/entities/movie.dart';
 import '../pages/movie_detail_page.dart';
-import 'package:flutter/material.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -56,7 +57,8 @@ class MovieCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: 'https://image.tmdb.org/t/p/w500${movie.posterPath}',
+                  imageUrl:
+                      'https://image.tmdb.org/t/p/w500${movie.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),

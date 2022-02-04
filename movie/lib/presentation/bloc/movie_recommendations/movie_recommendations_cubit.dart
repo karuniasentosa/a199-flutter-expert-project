@@ -9,13 +9,15 @@ part 'movie_recommendations_state.dart';
 
 class MovieRecommendationsCubit extends Cubit<MovieRecommendationsState> {
   final GetMovieRecommendations getMovieRecommendations;
+
   MovieRecommendationsCubit(this.getMovieRecommendations)
       : super(const MovieRecommendationsInitial());
 
   Future call(int movieId) async {
     emit(const MovieRecommendationsLoading());
     final result = await getMovieRecommendations.execute(movieId);
-    result.fold(_movieRecommendationsErrorCallback, _movieRecommendationsResultCallback);
+    result.fold(_movieRecommendationsErrorCallback,
+        _movieRecommendationsResultCallback);
   }
 
   void _movieRecommendationsResultCallback(List<Movie> result) {

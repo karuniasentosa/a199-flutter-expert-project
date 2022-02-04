@@ -9,15 +9,17 @@ import 'package:tv_series/usecases.dart'
 part 'tv_series_watchlist_event.dart';
 part 'tv_series_watchlist_state.dart';
 
-class TvSeriesWatchlistBloc extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchlistState> {
+class TvSeriesWatchlistBloc
+    extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchlistState> {
   final GetWatchlistTvSeriesStatus getWatchlistTvSeriesStatus;
   final InsertWatchlistTvSeries insertWatchlistTvSeries;
   final RemoveWatchlistTvSeries removeWatchlistTvSeries;
 
-  TvSeriesWatchlistBloc({
-    required this.getWatchlistTvSeriesStatus,
-    required this.insertWatchlistTvSeries,
-    required this.removeWatchlistTvSeries}) : super(TvSeriesWatchlistInitial()) {
+  TvSeriesWatchlistBloc(
+      {required this.getWatchlistTvSeriesStatus,
+      required this.insertWatchlistTvSeries,
+      required this.removeWatchlistTvSeries})
+      : super(TvSeriesWatchlistInitial()) {
     on<WatchlistStatusGet>(_onWatchlistStatusGet);
     on<WatchlistInsert>(_onWatchlistInsert);
     on<WatchlistRemove>(_onWatchlistRemove);
@@ -26,19 +28,15 @@ class TvSeriesWatchlistBloc extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchli
   Future _onWatchlistStatusGet(WatchlistStatusGet evt, Emitter emitter) async {
     final tvId = evt.tvId;
     final result = await getWatchlistTvSeriesStatus.execute(tvId: tvId);
-    result.fold(
-        (l) => emitter(TvSeriesWatchlistStatusError(l.message)),
-        (r) => emitter(TvSeriesWatchlistStatusResult(r))
-    );
+    result.fold((l) => emitter(TvSeriesWatchlistStatusError(l.message)),
+        (r) => emitter(TvSeriesWatchlistStatusResult(r)));
   }
 
   Future _onWatchlistInsert(WatchlistInsert evt, Emitter emitter) async {
     final tvDetail = evt.tvSeriesDetail;
     final result = await insertWatchlistTvSeries.execute(tvDetail);
-    result.fold(
-        (l) => emitter(InsertWatchlistError(l.message)),
-        (r) => emitter(const InsertWatchlistSuccess())
-    );
+    result.fold((l) => emitter(InsertWatchlistError(l.message)),
+        (r) => emitter(const InsertWatchlistSuccess()));
 
     add(WatchlistStatusGet(tvDetail.id));
   }
@@ -46,14 +44,9 @@ class TvSeriesWatchlistBloc extends Bloc<TvSeriesWatchlistEvent, TvSeriesWatchli
   Future _onWatchlistRemove(WatchlistRemove evt, Emitter emitter) async {
     final tvId = evt.tvId;
     final result = await removeWatchlistTvSeries.execute(tvId);
-    result.fold(
-        (l) => emitter(RemoveWatchlistError(l.message)),
-        (r) => emitter(const RemoveWatchlistSuccess())
-    );
+    result.fold((l) => emitter(RemoveWatchlistError(l.message)),
+        (r) => emitter(const RemoveWatchlistSuccess()));
 
     add(WatchlistStatusGet(tvId));
   }
-
-
-
 }

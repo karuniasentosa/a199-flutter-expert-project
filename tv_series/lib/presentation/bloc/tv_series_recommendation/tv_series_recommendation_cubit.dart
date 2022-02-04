@@ -8,15 +8,14 @@ part 'tv_series_recommendation_state.dart';
 class TvSeriesRecommendationCubit extends Cubit<TvSeriesRecommendationState> {
   final GetTvSeriesRecommendation getTvSeriesRecommendation;
 
-  TvSeriesRecommendationCubit(this.getTvSeriesRecommendation) : super(TvSeriesRecommendationInitial());
+  TvSeriesRecommendationCubit(this.getTvSeriesRecommendation)
+      : super(TvSeriesRecommendationInitial());
 
   Future call(int tvId) async {
     emit(const TvSeriesRecommendationLoading());
     final result = await getTvSeriesRecommendation.execute(tvId);
 
-    result.fold(
-        (failure) => emit(TvSeriesRecommendationError(failure.message)),
-        (tvSeries) => emit(TvSeriesRecommendationResult(tvSeries))
-    );
+    result.fold((failure) => emit(TvSeriesRecommendationError(failure.message)),
+        (tvSeries) => emit(TvSeriesRecommendationResult(tvSeries)));
   }
 }

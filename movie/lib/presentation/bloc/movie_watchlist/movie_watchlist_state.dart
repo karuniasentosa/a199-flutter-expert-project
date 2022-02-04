@@ -20,6 +20,7 @@ class MovieWatchlistStatus extends MovieWatchlistState {
 
 abstract class MovieRemoveWatchlistState extends MovieWatchlistState {
   final String message;
+
   const MovieRemoveWatchlistState(this.message);
 }
 
@@ -39,6 +40,7 @@ class MovieRemoveWatchlistError extends MovieRemoveWatchlistState {
 
 abstract class MovieInsertWatchlistState extends MovieWatchlistState {
   final String message;
+
   const MovieInsertWatchlistState(this.message);
 }
 

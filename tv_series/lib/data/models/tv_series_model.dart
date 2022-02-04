@@ -1,6 +1,6 @@
+import 'package:equatable/equatable.dart';
 import 'package:tv_series/domain/entities/tv_series.dart';
 import 'package:tv_series/domain/entities/tv_series_detail.dart';
-import 'package:equatable/equatable.dart';
 
 class TvSeriesModel extends Equatable {
   final String? posterPath;
@@ -9,27 +9,24 @@ class TvSeriesModel extends Equatable {
   final String overview;
 
   TvSeriesModel(
-      {
-       this.posterPath,
-       required this.id,
-       required this.name,
-       required this.overview});
+      {this.posterPath,
+      required this.id,
+      required this.name,
+      required this.overview});
 
   factory TvSeriesModel.fromJsonMap(Map<String, dynamic> jsonMap) =>
       TvSeriesModel(
           id: jsonMap['id'],
           name: jsonMap['name'],
           overview: jsonMap['overview'],
-          posterPath: jsonMap['poster_path']
-      );
+          posterPath: jsonMap['poster_path']);
 
   factory TvSeriesModel.fromJsonMapDatabase(Map<String, dynamic> jsonMap) =>
       TvSeriesModel(
           id: jsonMap['id'],
           name: jsonMap['name'],
           overview: jsonMap['overview'],
-          posterPath: jsonMap['posterPath']
-      );
+          posterPath: jsonMap['posterPath']);
 
   factory TvSeriesModel.fromTvSeriesDetail(TvSeriesDetail detail) =>
       TvSeriesModel(
@@ -39,26 +36,17 @@ class TvSeriesModel extends Equatable {
           posterPath: detail.posterPath);
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "overview": overview,
-    "posterPath": posterPath,
-  };
+        "id": id,
+        "name": name,
+        "overview": overview,
+        "posterPath": posterPath,
+      };
 
   TvSeries toEntity() {
     return TvSeries(
-        id: id,
-        name: name,
-        overview: overview,
-        posterPath: posterPath
-    );
+        id: id, name: name, overview: overview, posterPath: posterPath);
   }
 
   @override
-  List<Object?> get props => [
-    id,
-    name,
-    overview,
-    posterPath
-  ];
+  List<Object?> get props => [id, name, overview, posterPath];
 }

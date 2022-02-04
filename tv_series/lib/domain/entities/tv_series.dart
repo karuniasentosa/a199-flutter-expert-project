@@ -6,17 +6,12 @@ class TvSeries with EquatableMixin {
   final String name;
   final String overview;
 
-  TvSeries({
-       this.posterPath,
+  TvSeries(
+      {this.posterPath,
       required this.id,
       required this.name,
       required this.overview});
 
   @override
-  List<Object?> get props => [
-    id,
-    name,
-    overview,
-    posterPath
-  ];
+  List<Object?> get props => [id, name, overview, posterPath];
 }

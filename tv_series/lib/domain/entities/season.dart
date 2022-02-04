@@ -7,13 +7,12 @@ class Season extends Equatable {
   final String overview;
   final int seasonNumber;
 
-  Season({
-    required this.id,
-    required this.posterPath,
-    required this.name,
-    required this.overview,
-    required this.seasonNumber
-  });
+  Season(
+      {required this.id,
+      required this.posterPath,
+      required this.name,
+      required this.overview,
+      required this.seasonNumber});
 
   @override
   List<Object?> get props => [id, posterPath, name, overview, seasonNumber];

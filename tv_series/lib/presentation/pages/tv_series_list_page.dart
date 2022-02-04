@@ -1,15 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:tv_series/presentation/bloc/top_rated_tv_series/top_rated_tv_series_cubit.dart';
+
 import '../../domain/entities/tv_series.dart';
+import '../bloc/tv_series_list_page_bloc.dart';
 import 'now_playing_tv_series_page.dart';
 import 'popular_tv_series_page.dart';
 import 'tv_series_detail_page.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../bloc/tv_series_list_page_bloc.dart';
 
 class TvSeriesListPage extends StatefulWidget {
   static const routeName = '/home-tv';
@@ -63,7 +63,8 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is NowPlayingTvSeriesError) {
-                FirebaseCrashlytics.instance.log('TvSeriesListPage NowPlayingTvSeries error: ${state.errorMessage}');
+                FirebaseCrashlytics.instance.log(
+                    'TvSeriesListPage NowPlayingTvSeries error: ${state.errorMessage}');
                 return Text('An Error occurred: ${state.errorMessage}');
               } else {
                 return Container();
@@ -86,7 +87,8 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is PopularTvSeriesError) {
-                FirebaseCrashlytics.instance.log('TvSeriesListPage PopularTvSeries error ${state.errorMessage}');
+                FirebaseCrashlytics.instance.log(
+                    'TvSeriesListPage PopularTvSeries error ${state.errorMessage}');
                 return Text('Erro r occured: ${state.errorMessage}');
               } else {
                 return Container();
@@ -103,7 +105,8 @@ class _TvSeriesListPageState extends State<TvSeriesListPage> {
                   onTap: onTapTvSeries,
                 );
               } else if (state is TopRatedTvSeriesError) {
-                FirebaseCrashlytics.instance.log('TvSeriesListPage TopRatedTvSeries error ${state.errorMessage}');
+                FirebaseCrashlytics.instance.log(
+                    'TvSeriesListPage TopRatedTvSeries error ${state.errorMessage}');
                 return Text('Error occured: ${state.errorMessage}');
               } else {
                 return Container();

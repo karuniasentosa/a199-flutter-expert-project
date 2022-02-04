@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/appcolor.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:tv_series/domain/entities/genre.dart';
 import 'package:tv_series/presentation/bloc/tv_series_detail_page_bloc.dart';
+
 import '../../domain/entities/tv_series_detail.dart';
 import '../widgets/season_card.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'tv_series_list_page.dart' show TvSeriesList;
-import 'package:core/appcolor.dart';
 
 class TvSeriesDetailPage extends StatefulWidget {
   static const routeName = '/tv-detail';
@@ -44,7 +45,8 @@ class _TvSeriesDetailPageState extends State<TvSeriesDetailPage> {
             final tvSeries = state.tvSeriesDetail;
             return SafeArea(child: TvSeriesDetailContent(tvSeries: tvSeries));
           } else if (state is TvSeriesDetailError) {
-            FirebaseCrashlytics.instance.log('TvSeriesDetailPage TvSeriesDetail error: ${state.errorMessage}');
+            FirebaseCrashlytics.instance.log(
+                'TvSeriesDetailPage TvSeriesDetail error: ${state.errorMessage}');
             return Text(state.errorMessage);
           } else {
             return Container();
@@ -130,7 +132,8 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                             content: Text(
                                                 'insert watchlist success')));
                                   } else if (state is InsertWatchlistError) {
-                                    FirebaseCrashlytics.instance.log('TvSeriesDetailPage InsertWatchlist error: ${state.errorMessage}');
+                                    FirebaseCrashlytics.instance.log(
+                                        'TvSeriesDetailPage InsertWatchlist error: ${state.errorMessage}');
                                     showDialog(
                                         context: context,
                                         builder: (context) {
@@ -147,7 +150,8 @@ class _TvSeriesDetailContentState extends State<TvSeriesDetailContent> {
                                             content: Text(
                                                 'remove watchlist success')));
                                   } else if (state is RemoveWatchlistError) {
-                                    FirebaseCrashlytics.instance.log('TvSeriesDetailPage RemoveWatchlist error: ${state.errorMessage}');
+                                    FirebaseCrashlytics.instance.log(
+                                        'TvSeriesDetailPage RemoveWatchlist error: ${state.errorMessage}');
                                     showDialog(
                                         context: context,
                                         builder: (context) {

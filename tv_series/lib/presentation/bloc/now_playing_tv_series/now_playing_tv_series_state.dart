@@ -11,6 +11,7 @@ class NowPlayingTvSeriesInitial extends NowPlayingTvSeriesState {
 
 class NowPlayingTvSeriesLoading extends NowPlayingTvSeriesState {
   const NowPlayingTvSeriesLoading();
+
   @override
   List<Object?> get props => [];
 }

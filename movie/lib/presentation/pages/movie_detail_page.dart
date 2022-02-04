@@ -1,15 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/core.dart' show AppColors;
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movie/domain/entities/genre.dart';
 import 'package:movie/domain/entities/movie_detail.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../bloc/movie_detail_page_blocs.dart';
-
-import 'package:core/core.dart' show AppColors;
 
 class MovieDetailPage extends StatefulWidget {
   static const ROUTE_NAME = '/detail';
@@ -46,7 +44,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
               child: DetailContent(movie),
             );
           } else if (state is MovieDetailError) {
-            FirebaseCrashlytics.instance.log('MovieDetail fetch error: ${state.errorMessage}');
+            FirebaseCrashlytics.instance
+                .log('MovieDetail fetch error: ${state.errorMessage}');
             return Text(state.errorMessage);
           } else {
             return Container();
@@ -126,8 +125,10 @@ class _DetailContentState extends State<DetailContent> {
                               builder: (BuildContext context,
                                   MovieWatchlistState state) {
                                 final isAddedWatchlist =
-                                (state is MovieWatchlistInitial) ? false // initial check
-                                    : (state as MovieWatchlistStatus).watchlisted;
+                                    (state is MovieWatchlistInitial)
+                                        ? false // initial check
+                                        : (state as MovieWatchlistStatus)
+                                            .watchlisted;
                                 return ElevatedButton(
                                     onPressed: () {
                                       if (!isAddedWatchlist) {
@@ -165,7 +166,8 @@ class _DetailContentState extends State<DetailContent> {
                                           content: Text(
                                               'remove watchlist success')));
                                 } else if (state is MovieRemoveWatchlistError) {
-                                  FirebaseCrashlytics.instance.log('MovieDetail removewatchlist error: ${state.message}');
+                                  FirebaseCrashlytics.instance.log(
+                                      'MovieDetail removewatchlist error: ${state.message}');
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -181,7 +183,8 @@ class _DetailContentState extends State<DetailContent> {
                                           content: Text(
                                               'insert watchlist ${state.message}')));
                                 } else if (state is MovieInsertWatchlistError) {
-                                  FirebaseCrashlytics.instance.log('MovieDetail insertwatchlist error: ${state.message}');
+                                  FirebaseCrashlytics.instance.log(
+                                      'MovieDetail insertwatchlist error: ${state.message}');
                                   showDialog(
                                       context: context,
                                       builder: (context) {

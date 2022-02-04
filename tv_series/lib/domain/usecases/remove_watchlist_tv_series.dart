@@ -1,5 +1,6 @@
-import 'package:dartz/dartz.dart' show Either;
 import 'package:core/core.dart' show DatabaseFailure;
+import 'package:dartz/dartz.dart' show Either;
+
 import '../repositories/tv_series_repository.dart';
 
 class RemoveWatchlistTvSeries {

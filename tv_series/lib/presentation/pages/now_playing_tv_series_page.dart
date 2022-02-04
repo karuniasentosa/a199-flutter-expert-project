@@ -1,10 +1,9 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tv_series/blocs.dart';
 
 import '../widgets/tv_series_card_list.dart';
-import 'package:flutter/material.dart';
-
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class NowPlayingTvSeriesPage extends StatefulWidget {
   static const routeName = '/now-playing-tv';
@@ -19,9 +18,7 @@ class _NowPlayingTvSeriesState extends State<NowPlayingTvSeriesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        context.read<NowPlayingTvSeriesCubit>()()
-    );
+    Future.microtask(() => context.read<NowPlayingTvSeriesCubit>()());
   }
 
   @override
@@ -46,8 +43,9 @@ class _NowPlayingTvSeriesState extends State<NowPlayingTvSeriesPage> {
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is NowPlayingTvSeriesError){
-              FirebaseCrashlytics.instance.log('NowPlayingTvSeriesPage NowPlayingTvSeries error: ${state.errorMessage}');
+            } else if (state is NowPlayingTvSeriesError) {
+              FirebaseCrashlytics.instance.log(
+                  'NowPlayingTvSeriesPage NowPlayingTvSeries error: ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

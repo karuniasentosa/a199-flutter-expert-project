@@ -1,7 +1,8 @@
+import 'package:equatable/equatable.dart';
+import 'package:tv_series/domain/entities/tv_series_detail.dart';
+
 import 'genre_model.dart';
 import 'season_model.dart';
-import 'package:tv_series/domain/entities/tv_series_detail.dart';
-import 'package:equatable/equatable.dart';
 
 class TvSeriesDetailModel extends Equatable {
   final int id;
@@ -37,7 +38,8 @@ class TvSeriesDetailModel extends Equatable {
 
   factory TvSeriesDetailModel.fromJsonMap(Map<String, dynamic> map) {
     final int id = map['id'];
-    final List<GenreModel> genres = (map['genres'] as List).map((e) => GenreModel.fromJson(e)).toList();
+    final List<GenreModel> genres =
+        (map['genres'] as List).map((e) => GenreModel.fromJson(e)).toList();
     List<SeasonModel>? seasons;
     if (map['seasons'] != null) {
       seasons = (map['seasons'] as List)
@@ -78,7 +80,9 @@ class TvSeriesDetailModel extends Equatable {
         id: id,
         genres: genres.map((e) => e.toEntity()).toList(),
         name: name,
-        seasons: seasons != null ? (seasons!.map((e) => e.toEntity()).toList()) : null,
+        seasons: seasons != null
+            ? (seasons!.map((e) => e.toEntity()).toList())
+            : null,
         voteAverage: voteAverage,
         voteCount: voteCount,
         status: status,
@@ -88,8 +92,7 @@ class TvSeriesDetailModel extends Equatable {
         originalName: originalName,
         posterPath: posterPath,
         numberOfEpisodes: numberOfEpisodes,
-        numberOfSeasons: numberOfSeasons
-    );
+        numberOfSeasons: numberOfSeasons);
   }
 
   @override

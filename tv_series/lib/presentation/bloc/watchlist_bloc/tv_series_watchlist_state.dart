@@ -10,28 +10,27 @@ class TvSeriesWatchlistInitial extends TvSeriesWatchlistState {
 }
 
 /// An abstract class to define a state that contains watchlist status.
-abstract class TvSeriesWatchlistStatus extends TvSeriesWatchlistState { 
+abstract class TvSeriesWatchlistStatus extends TvSeriesWatchlistState {
   const TvSeriesWatchlistStatus();
 }
 
 class TvSeriesWatchlistStatusResult extends TvSeriesWatchlistStatus {
   final bool watchlisted;
-  
+
   const TvSeriesWatchlistStatusResult(this.watchlisted);
-  
+
   @override
   List<Object?> get props => [watchlisted];
 }
 
 class TvSeriesWatchlistStatusError extends TvSeriesWatchlistStatus {
   final String errorMessage;
-  
+
   const TvSeriesWatchlistStatusError(this.errorMessage);
-  
+
   @override
   List<Object?> get props => [errorMessage];
 }
-
 
 /// An abstract class to define a state about insert watchlist.
 abstract class TvSeriesInsertWatchlistState extends TvSeriesWatchlistState {
@@ -40,16 +39,16 @@ abstract class TvSeriesInsertWatchlistState extends TvSeriesWatchlistState {
 
 class InsertWatchlistSuccess extends TvSeriesInsertWatchlistState {
   const InsertWatchlistSuccess();
-  
+
   @override
   List<Object?> get props => [];
 }
 
 class InsertWatchlistError extends TvSeriesInsertWatchlistState {
   final String errorMessage;
-  
+
   const InsertWatchlistError(this.errorMessage);
-  
+
   @override
   List<Object?> get props => [errorMessage];
 }
@@ -61,16 +60,16 @@ abstract class TvSeriesRemoveWatchlistState extends TvSeriesWatchlistState {
 
 class RemoveWatchlistSuccess extends TvSeriesRemoveWatchlistState {
   const RemoveWatchlistSuccess();
-  
+
   @override
   List<Object?> get props => [];
 }
 
 class RemoveWatchlistError extends TvSeriesRemoveWatchlistState {
   final String errorMessage;
-  
+
   const RemoveWatchlistError(this.errorMessage);
-  
+
   @override
   List<Object?> get props => [errorMessage];
 }

@@ -1,5 +1,6 @@
-import 'package:dartz/dartz.dart' show Either;
 import 'package:core/core.dart' show Failure;
+import 'package:dartz/dartz.dart' show Either;
+
 import '../entities/movie.dart';
 import '../repositories/movie_repository.dart';
 

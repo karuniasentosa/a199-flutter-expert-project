@@ -7,15 +7,13 @@ part 'popular_movies_state.dart';
 
 class PopularMoviesCubit extends Cubit<PopularMoviesState> {
   final GetPopularMovies getPopularMovies;
-  PopularMoviesCubit(this.getPopularMovies)
-      : super(PopularMoviesInitial());
+
+  PopularMoviesCubit(this.getPopularMovies) : super(PopularMoviesInitial());
 
   Future call() async {
     emit(const PopularMoviesLoading());
     final result = await getPopularMovies.execute();
-    result.fold(
-        (failure) => emit(PopularMoviesError(failure.message)),
-        (movies) => emit(PopularMoviesResult(movies))
-    );
+    result.fold((failure) => emit(PopularMoviesError(failure.message)),
+        (movies) => emit(PopularMoviesResult(movies)));
   }
 }

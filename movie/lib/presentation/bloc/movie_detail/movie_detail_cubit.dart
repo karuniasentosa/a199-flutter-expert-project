@@ -8,6 +8,7 @@ part 'movie_detail_state.dart';
 
 class MovieDetailCubit extends Cubit<MovieDetailState> {
   final GetMovieDetail getMovieDetail;
+
   MovieDetailCubit(this.getMovieDetail) : super(const MovieDetailInitial());
 
   /// I have no idea what to name...

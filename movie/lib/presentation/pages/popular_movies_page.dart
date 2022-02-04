@@ -1,9 +1,9 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../bloc/popular_movies_page_bloc.dart';
-
-import '../widgets/movie_card_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/popular_movies_page_bloc.dart';
+import '../widgets/movie_card_list.dart';
 
 class PopularMoviesPage extends StatefulWidget {
   static const ROUTE_NAME = '/popular-movie';
@@ -41,8 +41,9 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                 },
                 itemCount: state.movies.length,
               );
-            } else if (state is PopularMoviesError){
-              FirebaseCrashlytics.instance.log('PopularMoviesPage PopularMovies error: ${state.errorMessage}');
+            } else if (state is PopularMoviesError) {
+              FirebaseCrashlytics.instance.log(
+                  'PopularMoviesPage PopularMovies error: ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

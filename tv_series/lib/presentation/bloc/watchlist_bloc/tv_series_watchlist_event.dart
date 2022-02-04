@@ -15,9 +15,9 @@ class WatchlistStatusGet extends TvSeriesWatchlistEvent {
 
 class WatchlistInsert extends TvSeriesWatchlistEvent {
   final TvSeriesDetail tvSeriesDetail;
-  
+
   const WatchlistInsert(this.tvSeriesDetail);
-  
+
   @override
   List<Object?> get props => [tvSeriesDetail];
 }

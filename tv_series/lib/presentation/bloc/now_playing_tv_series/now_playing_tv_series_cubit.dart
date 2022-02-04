@@ -8,14 +8,13 @@ part 'now_playing_tv_series_state.dart';
 class NowPlayingTvSeriesCubit extends Cubit<NowPlayingTvSeriesState> {
   final GetNowPlayingTvSeries getNowPlayingTvSeries;
 
-  NowPlayingTvSeriesCubit(this.getNowPlayingTvSeries) : super(NowPlayingTvSeriesInitial());
+  NowPlayingTvSeriesCubit(this.getNowPlayingTvSeries)
+      : super(NowPlayingTvSeriesInitial());
 
   Future call() async {
     emit(const NowPlayingTvSeriesLoading());
     final result = await getNowPlayingTvSeries.execute();
-    result.fold(
-        (l) => emit(NowPlayingTvSeriesError(l.message)),
-        (r) => emit(NowPlayingTvSeriesResult(r))
-    );
+    result.fold((l) => emit(NowPlayingTvSeriesError(l.message)),
+        (r) => emit(NowPlayingTvSeriesResult(r)));
   }
 }

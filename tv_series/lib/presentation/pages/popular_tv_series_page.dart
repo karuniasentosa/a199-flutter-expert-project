@@ -1,11 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../widgets/tv_series_card_list.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../bloc/popular_tv_series_page_bloc.dart';
-
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+
+import '../bloc/popular_tv_series_page_bloc.dart';
+import '../widgets/tv_series_card_list.dart';
 
 class PopularTvSeriesPage extends StatefulWidget {
   static const routeName = '/popular-tv';
@@ -20,9 +19,7 @@ class _PopularTvSeriesPage extends State<PopularTvSeriesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        context.read<PopularTvSeriesCubit>()()
-    );
+    Future.microtask(() => context.read<PopularTvSeriesCubit>()());
   }
 
   @override
@@ -47,8 +44,9 @@ class _PopularTvSeriesPage extends State<PopularTvSeriesPage> {
                 },
                 itemCount: state.tvSeries.length,
               );
-            } else if (state is PopularTvSeriesError){
-              FirebaseCrashlytics.instance.log('PopularTvSeriesPage PopularTvSeries error ${state.errorMessage}');
+            } else if (state is PopularTvSeriesError) {
+              FirebaseCrashlytics.instance.log(
+                  'PopularTvSeriesPage PopularTvSeries error ${state.errorMessage}');
               return Center(
                 key: const Key('error_message'),
                 child: Text(state.errorMessage),

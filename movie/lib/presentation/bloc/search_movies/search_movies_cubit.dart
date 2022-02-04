@@ -7,6 +7,7 @@ part 'search_movies_state.dart';
 
 class SearchMoviesCubit extends Cubit<SearchMoviesState> {
   final SearchMovies searchMovies;
+
   SearchMoviesCubit(this.searchMovies) : super(SearchMoviesInitial());
 
   Future call(String query) async {
@@ -14,9 +15,7 @@ class SearchMoviesCubit extends Cubit<SearchMoviesState> {
 
     final result = await searchMovies.execute(query);
 
-    result.fold(
-            (failure) => emit(SearchMoviesError(failure.message)),
-            (movies) => emit(SearchMoviesResult(movies))
-    );
+    result.fold((failure) => emit(SearchMoviesError(failure.message)),
+        (movies) => emit(SearchMoviesResult(movies)));
   }
 }

@@ -1,6 +1,7 @@
+import 'package:equatable/equatable.dart';
+
 import 'genre.dart';
 import 'season.dart';
-import 'package:equatable/equatable.dart';
 
 class TvSeriesDetail extends Equatable {
   final int id;
@@ -19,35 +20,34 @@ class TvSeriesDetail extends Equatable {
   final int numberOfEpisodes;
 
   TvSeriesDetail(
-      { this.seasons,
-        required this.id,
-        required this.genres,
-        required this.posterPath,
-        required this.name,
-        required this.voteAverage,
-        required this.voteCount,
-        required this.status,
-        required this.firstAirDate,
-        required this.overview,
-        required this.originalLanguage,
-        required this.originalName,
-        required this.numberOfEpisodes,
-        required this.numberOfSeasons
-      });
+      {this.seasons,
+      required this.id,
+      required this.genres,
+      required this.posterPath,
+      required this.name,
+      required this.voteAverage,
+      required this.voteCount,
+      required this.status,
+      required this.firstAirDate,
+      required this.overview,
+      required this.originalLanguage,
+      required this.originalName,
+      required this.numberOfEpisodes,
+      required this.numberOfSeasons});
 
   @override
   List<Object?> get props => [
-    id,
-    genres,
-    seasons,
-    name,
-    voteAverage,
-    voteCount,
-    status,
-    firstAirDate,
-    overview,
-    originalLanguage,
-    originalName,
-    posterPath,
-  ];
+        id,
+        genres,
+        seasons,
+        name,
+        voteAverage,
+        voteCount,
+        status,
+        firstAirDate,
+        overview,
+        originalLanguage,
+        originalName,
+        posterPath,
+      ];
 }

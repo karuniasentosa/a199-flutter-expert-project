@@ -17,6 +17,12 @@ void main() {
   });
 
   blocTest<PopularMoviesCubit, PopularMoviesState>(
+      'initial state',
+      build: () => popularMoviesCubit,
+      verify: (cubit) => expect(cubit.state, PopularMoviesInitial())
+  );
+
+  blocTest<PopularMoviesCubit, PopularMoviesState>(
     'should return popular movies',
     setUp: () {
       when(mockGetPopularMovies.execute())

@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<WatchlistTvSeriesCubit, WatchlistTvSeriesState>(
+    'should return intial state',
+    build: () =>  WatchlistTvSeriesCubit(mockGetWatchlistTvSeries),
+      verify: (cubit) => expect(cubit.state, WatchlistTvSeriesInitial())
+  );
+
+  blocTest<WatchlistTvSeriesCubit, WatchlistTvSeriesState>(
     'should return watchlisted tv series list',
     setUp: () => when(mockGetWatchlistTvSeries.execute())
         .thenAnswer((_) async => Right(tTvSeriesWatchlist)),

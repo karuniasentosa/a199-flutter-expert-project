@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<WatchlistMoviesCubit, WatchlistMoviesState>(
+      'initial state',
+      build: () => watchlistMoviesCubit,
+      verify: (cubit) => expect(cubit.state, WatchlistMoviesInitial())
+  );
+
+  blocTest<WatchlistMoviesCubit, WatchlistMoviesState>(
     'Should return list of movies when watchlisted',
     build: () => watchlistMoviesCubit,
     setUp: () {

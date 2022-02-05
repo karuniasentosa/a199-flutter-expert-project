@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<TopRatedMoviesCubit, TopRatedMoviesState>(
+      'initial state',
+      build: () => topRatedMovieCubit,
+      verify: (cubit) => expect(cubit.state, TopRatedMoviesInitial())
+  );
+
+  blocTest<TopRatedMoviesCubit, TopRatedMoviesState>(
     'should return a value when list is returned',
     setUp: () {
       when(mockGetTopRatedMovies.execute())

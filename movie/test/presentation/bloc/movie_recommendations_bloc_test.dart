@@ -35,6 +35,12 @@ void main() {
   });
 
   blocTest<MovieRecommendationsCubit, MovieRecommendationsState>(
+    'Initial state should return initial when no thing to do',
+    build: () => movieRecommendationsCubit,
+    verify: (cubit) => expect(cubit.state, const MovieRecommendationsInitial())
+  );
+
+  blocTest<MovieRecommendationsCubit, MovieRecommendationsState>(
       'Should return list of movie recommendations when cubit is executed',
       setUp: () {
         when(mockGetMovieRecommendations.execute(tId))

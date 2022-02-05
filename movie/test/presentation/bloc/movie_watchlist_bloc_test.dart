@@ -29,6 +29,12 @@ void main() {
 
   const int movieId = 102;
 
+  blocTest<MovieWatchlistBloc, MovieWatchlistState>(
+    'initial state',
+    build: () => movieWatchlistBloc,
+    verify: (cubit) => expect(cubit.state, MovieWatchlistInitial())
+  );
+
   group('get watchlist status', () {
     blocTest<MovieWatchlistBloc, MovieWatchlistState>(
       'should return false when usecase said false',

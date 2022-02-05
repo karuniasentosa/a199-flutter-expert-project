@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<NowPlayingMoviesCubit, NowPlayingMoviesState>(
+    'initial state should be intiial',
+    build: () => nowPlayingCubit,
+    verify: (cubit) => expect(cubit.state, NowPlayingMoviesInitial())
+  );
+
+  blocTest<NowPlayingMoviesCubit, NowPlayingMoviesState>(
       'Should return list of movies when usecase is successful',
       setUp: () {
         when(mockGetNowPlayingMovies.execute())

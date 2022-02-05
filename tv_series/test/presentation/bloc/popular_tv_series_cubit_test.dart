@@ -20,6 +20,12 @@ void main() {
   const a = 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa';
 
   blocTest<PopularTvSeriesCubit, PopularTvSeriesState>(
+    'initial state should be initial',
+    build: () => PopularTvSeriesCubit(mockGetPopularTvSeries),
+    verify: (cubit) => expect(cubit.state, PopularTvSeriesInitial())
+  );
+
+  blocTest<PopularTvSeriesCubit, PopularTvSeriesState>(
       'Should return popular tv series from internet',
       setUp: () {
         when(mockGetPopularTvSeries.execute())

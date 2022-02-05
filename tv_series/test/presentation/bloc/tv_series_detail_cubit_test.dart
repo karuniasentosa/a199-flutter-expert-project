@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<TvSeriesDetailCubit, TvSeriesDetailState>(
+    'tvseriesdetailcubit should be initial',
+    build: () => TvSeriesDetailCubit(mockGetTvSeriesDetail),
+      verify: (cubit) => expect(cubit.state, TvSeriesDetailInitial())
+  );
+
+  blocTest<TvSeriesDetailCubit, TvSeriesDetailState>(
     'Should return correct tv series detail',
     setUp: () {
       when(mockGetTvSeriesDetail.execute(2))

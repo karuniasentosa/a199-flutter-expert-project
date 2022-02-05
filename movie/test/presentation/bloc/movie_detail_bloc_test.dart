@@ -20,6 +20,12 @@ void main() {
   const tId = 1;
 
   blocTest<MovieDetailCubit, MovieDetailState>(
+    'Should return initial state when nothing to do',
+    build: () => movieDetailCubit,
+    verify: (cubit) => expect(cubit.state, const MovieDetailInitial())
+  );
+
+  blocTest<MovieDetailCubit, MovieDetailState>(
       'Should return a result with movie detail',
       setUp: () {
         when(mockGetMovieDetail.execute(tId))

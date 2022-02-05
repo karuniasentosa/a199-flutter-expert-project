@@ -27,6 +27,16 @@ void main() {
     );
   });
 
+  blocTest(
+    'tvSeriesWatfchlistState should be initial',
+    build: () => TvSeriesWatchlistBloc(
+      getWatchlistTvSeriesStatus: mockGetWatchlistTvSeriesStatus,
+      insertWatchlistTvSeries: mockInsertWatchlistTvSeries,
+      removeWatchlistTvSeries: mockRemoveWatchlistTvSeries,
+    ),
+      verify: (TvSeriesWatchlistBloc cubit) => expect(cubit.state, TvSeriesWatchlistInitial())
+  );
+
   // All state shall be under [TvSeriesWatchlistState]
   group('get watchlist status', () {
     blocTest<TvSeriesWatchlistBloc, TvSeriesWatchlistState>(

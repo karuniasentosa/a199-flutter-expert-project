@@ -18,6 +18,12 @@ void main() {
   });
 
   blocTest<SearchTvSeriesCubit, SearchTvSeriesState>(
+    'initial state should be initial state',
+    build: () => SearchTvSeriesCubit(mockSearchTvSeries),
+      verify: (cubit) => expect(cubit.state, SearchTvSeriesInitial())
+  );
+
+  blocTest<SearchTvSeriesCubit, SearchTvSeriesState>(
     'should return list of search',
     setUp: () {
       when(mockSearchTvSeries.execute('query'))

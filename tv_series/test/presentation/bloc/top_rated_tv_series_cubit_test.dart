@@ -17,6 +17,12 @@ void main() {
     topRatedTvSeriesCubit = TopRatedTvSeriesCubit(mockGetTopRatedTvSeries);
   });
 
+  blocTest(
+    'top rated tv series initial should be initial',
+    build: () => TopRatedTvSeriesCubit(mockGetTopRatedTvSeries),
+    verify: (TopRatedTvSeriesCubit cubit) => expect(cubit.state, TopRatedTvSeriesInitial())
+  );
+
   blocTest<TopRatedTvSeriesCubit, TopRatedTvSeriesState>(
     'should return list of top rated movies',
     setUp: () {

@@ -20,6 +20,12 @@ void main() {
   const shruggie = r'¯\_(ツ)_/¯';
 
   blocTest<SearchMoviesCubit, SearchMoviesState>(
+    'initial state when do nothing',
+    build: () => searchMoviesCubit,
+    verify: (cubit) => expect(cubit.state, SearchMoviesInitial())
+  );
+  ;
+  blocTest<SearchMoviesCubit, SearchMoviesState>(
       'Should return list of movies searched',
       setUp: () {
         when(mockSearchMovies.execute('Spiderman'))
